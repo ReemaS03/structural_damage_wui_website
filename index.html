@@ -12,38 +12,57 @@
 
     <header id="top">
       <h1>Wildfire Severity and Structural Damage Prediction in Wildland-Urban Interface (WUI) Areas</h1>
-      <p><em>Understanding and predicting wildfire impacts on communities in Wildland-Urban Interface (WUI) areas.</em></p>
+      <p><em>Understanding and predicting wildfire impacts on residential structures in Wildland-Urban Interface (WUI) areas.</em></p>
     </header>
 
     <nav class="navbar">
 
       <div class="nav-left">
-        <img src="images/hdsi-logo.png" alt="HDSI Logo" class="logo">
+        <a href="https://datascience.ucsd.edu" target="_blank">
+          <img src="images/hdsi-logo.png" alt="HDSI Logo" class="logo">
+        </a>
       </div>
+
     
       <div class="nav-tabs">
         <a href="#overview">Overview</a>
         <a href="#approach">Approach</a>
         <a href="#results">Results</a>
-        <a href="#future">Future Work</a>
+        <a href="#conclusion">Conclusion</a>
         <a href="#links">Links</a>
       </div>
     
       <div class="nav-right">
-        <img src="images/cotality-logo.png" alt="Cotality Logo" class="logo">
+        <a href="https://www.cotality.com" target="_blank">
+          <img src="images/cotality-logo.png" alt="Cotality Logo" class="logo">
+        </a>
       </div>
-    
+
     </nav>
 
     <section class="card" id="overview">
       <h2>Overview</h2>
 
-      <h3>Why This Matters</h3>
-      <p>To be added</p>
+      <div class="overview-row">
+        <div class="overview-left">
+          <h3>Why This Matters</h3>
+        </div>
+        <div class="overview-right">
+          <p>In recent years, California has experienced unprecedented levels of wildfire frequency and intensity. These fires not only affect natural landscapes but are increasingly affecting urban communities, as demonstrated by recent wildfires in California, such as the Palisades fires. Wildfires often leave residents, community planners, and insurance companies struggling to understand why certain structures were destroyed while others survived. Despite the growing concerns and effects of wildfires on structures, publicly accessible tools that assess damage at the structure level are limited. This lack of structure-level insights makes it more difficult for residents to be prepared, for community planners to identify vulnerable neighborhoods, and for insurance companies to assess risk accurately.</p>
+        </div>
+      </div>
 
-      <h3>What We’re Doing</h3>
-      <p>To be added</p>
+      <div class="overview-row">
+        <div class="overview-left">
+          <h3>What We're Doing</h3>
+        </div>
+        <div class="overview-right">
+          <p>Our goal is to construct a model to predict the structural damage on residential structures in Wildland-Urban Interface (WUI) areas using readily available public data. With this goal, we can contribute insights that can support better preparedness, safer community planning, and more informed decision-making by residents, planners, and insurers in WUI areas. More specifically, we aim to investigate whether residential structure damage in California wildfires can be predicted using readily available geospatial, fuel, topographic, weather, and structural data with Neural Network and Random Forest models.</p>
+        </div>
+      </div>
+
     </section>
+
 
     <section class="card" id="approach">
       <h2>Our Approach</h2>
@@ -73,26 +92,29 @@
       <h2>Results</h2>
       <p>To be added</p>
 
-      <h3>Interpretation</h3>
+      <h3>Interpretation & Discussion</h3>
       <p>To be added</p>
     </section>
 
-    <section class="card" id="future">
-      <h2>Future Work</h2>
+    <section class="card" id="conclusion">
+      <h2>Conclusion</h2>
       <p>To be added</p>
     </section>
 
     <section class="card" id="links">
       <h2>Links</h2>
-      <p>
-        <a class="btn" href="#">Project Report</a>
-        <a class="btn" href="#">Project Poster</a>
-        <a class="btn" href="#">Code Repository</a>
-        <a class="btn" href="#top">Back to Top</a>
-      </p>
+
+      <div class="links-row">
+        <a class="btn" href="report.pdf" target="_blank">Project Report</a>
+        <a class="btn" href="poster.pdf" target="_blank">Project Poster</a>
+        <a class="btn" href="https://github.com/ChanyoungPark07/structural_damage_wui" target="_blank">Code Repository</a>
+      </div>
     </section>
 
   </main>
+
+  <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
   <script src="main.js"></script>
+
 </body>
 </html>
