@@ -10,6 +10,7 @@
 <body>
   <main>
 
+    <!-- Header and navigation bar -->
     <header id="top">
       <h1>Wildfire Severity and Structural Damage Prediction in Wildland-Urban Interface (WUI) Areas</h1>
       <p><em>Understanding and predicting wildfire impacts on residential structures in Wildland-Urban Interface (WUI) areas.</em></p>
@@ -40,79 +41,360 @@
 
     </nav>
 
+
+    <!-- Overview section -->
     <section class="card" id="overview">
       <h2>Overview</h2>
 
-      <div class="overview-row">
-        <div class="overview-left">
+      <div class="overview-grid">
+        <!-- Row 1 -->
+        <div class="overview-label">
           <h3>Why This Matters</h3>
         </div>
-        <div class="overview-right">
-          <p>In recent years, California has experienced unprecedented levels of wildfire frequency and intensity. These fires not only affect natural landscapes but are increasingly affecting urban communities, as demonstrated by recent wildfires in California, such as the Palisades fires. Wildfires often leave residents, community planners, and insurance companies struggling to understand why certain structures were destroyed while others survived. Despite the growing concerns and effects of wildfires on structures, publicly accessible tools that assess damage at the structure level are limited. This lack of structure-level insights makes it more difficult for residents to be prepared, for community planners to identify vulnerable neighborhoods, and for insurance companies to assess risk accurately.</p>
-        </div>
-      </div>
 
-      <div class="overview-row">
-        <div class="overview-left">
+        <div class="overview-text">
+          <p>
+            Wildfires in California are becoming more frequent and more destructive, especially in
+            <strong>Wildland-Urban Interface (WUI)</strong> areas, where homes meet wildland vegetation.
+          </p>
+
+          <p>
+            Yet after major wildfire events, residents, planners, and insurers are often left asking the same question:
+          </p>
+
+          <p class="pull-quote">
+            <strong>Why did some homes burn while others survived?</strong>
+          </p>
+
+          <p>
+            Despite growing wildfire risk, publicly accessible tools that assess damage at the
+            <strong>individual structure level</strong> remain limited.
+          </p>
+        </div>
+
+        <figure class="overview-visual">
+          <div class="image-container">
+            <img
+              src="images/north-complex-map.png"
+              alt="North Complex Fire structure damage map"
+              class="overview-img"
+            />
+            <button type="button" class="expand-btn"
+                    onclick="openModal(this.previousElementSibling)">⤢</button>
+          </div>
+
+          <figcaption class="overview-caption">
+            Observed structure outcomes in the North Complex Fire (red = destroyed, blue = undamaged).
+          </figcaption>
+
+        </figure>
+
+        <!-- Row 2 -->
+        <div class="overview-label row2">
           <h3>What We're Doing</h3>
         </div>
-        <div class="overview-right">
-          <p>Our goal is to construct a model to predict the structural damage on residential structures in Wildland-Urban Interface (WUI) areas using readily available public data. With this goal, we can contribute insights that can support better preparedness, safer community planning, and more informed decision-making by residents, planners, and insurers in WUI areas. More specifically, we aim to investigate whether residential structure damage in California wildfires can be predicted using readily available geospatial, fuel, topographic, weather, and structural data with Neural Network and Random Forest models.</p>
+
+        <div class="overview-text overview-span row2">
+          <p>
+            In this project, we develop models to predict whether a residential structure will be
+            <strong>destroyed</strong> or experience <strong>no damage</strong> during a wildfire event in California.
+          </p>
+
+          <p>
+            Using publicly available structural, environmental, and spatial data, we train both
+            <strong>Random Forest</strong> and <strong>Neural Network</strong> models to identify patterns associated with destruction.
+          </p>
+          <p>
+            Our goal is to provide insights that can support:
+          </p>
+
+          <ul class="overview-bullets">
+            <li>risk assessment</li>
+            <li>community preparedness</li>
+            <li>safer planning in WUI areas</li>
+          </ul>
         </div>
       </div>
-
     </section>
 
-
+    <!-- Approach section -->
     <section class="card" id="approach">
       <h2>Our Approach</h2>
+      <p class="approach-intro">
+        To understand why some homes are destroyed while others survive, we combine multiple public datasets that describe wildfire severity, environmental conditions, and structural characteristics. 
+        We transform these data into structure-level features and train machine learning models to predict damage outcomes.
+      </p>
+      <div class="image-container">
+        <img 
+          src="images/project-pipeline.png" 
+          alt="Wildfire Structure Damage Prediction Pipeline Flowchart"
+          class="pipeline-img"
+        >
+        <button type="button" class="expand-btn" onclick="openModal(this.previousElementSibling)">⤢</button>
+      </div>
 
+      <p class="pipeline-caption">
+        Flowchart showcasing high-level overview of how multi-source data is merged and engineered to generate structure-level wildfire damage predictions.
+      </p>
+
+      <hr class="section-divider">
       <h3>Data</h3>
-      <h4>Structure Damage Records</h4>
-      <p>To be added</p>
 
-      <h4>Wildland-Urban Interface (WUI) Data</h4>
-      <p>To be added</p>
+      <h4>Prediction Target</h4>
+      <div class="subsection-content">
+        <p>
+          Our prediction target is a binary structure damage outcome derived from 
+          <strong>CAL FIRE Damage Inspection (DINS)</strong> reports. 
+          We retain only residential structures classified as 
+          <strong>Destroyed (&gt;50%)</strong> or <strong>No Damage</strong> 
+          to focus on clearly defined damage states.
+        </p>
+      </div>
 
-      <h4>Environmental and Fire Severity Features</h4>
-      <p>To be added</p>
+      <h4>Damage & Structural Attributes</h4>
+      <div class="subsection-content">
+        <p>
+          To capture structural characteristics that may influence damage outcomes, we integrate:
+        </p>
+        <ul class="data-list">
+          <li><strong>CAL FIRE Damage Inspection (DINS)</strong> — structure damage classification and structure attributes such as construction materials.</li>
+          <li><strong>National Structure Inventory (NSI)</strong> — building characteristics such as square footage, number of stories, foundation type, and structural value</li>
+        </ul>
+      </div>
 
-      <h3>Feature Engineering</h3>
-      <p>To be added</p>
+      <h4>Environmental & Fire Severity Features</h4>
+      <div class="subsection-content">
+        <p>
+          We constructed a merged pixel-level fire severity dataset integrating:
+        </p>
+
+        <ul class="data-list">
+          <li><strong>Monitoring Trends in Burn Severity (MTBS)</strong> — burn severity classifications</li>
+          <li><strong>LANDFIRE</strong> — fuels and vegetation characteristics</li>
+          <li><strong>National Land Cover Database (NLCD)</strong> — land cover classification</li>
+          <li><strong>PRISM</strong> — temperature and precipitation data</li>
+        </ul>
+
+        <p>
+          These datasets were integrated into a unified fire severity dataset during our Q1 project.
+        </p>
+
+        <details class="expandable">
+          <summary>View Q1 project deliverables</summary>
+          <div class="expand-content">
+            <a href="documents/q1-report.pdf" target="_blank" class="btn">Q1 Report</a>
+            <a href="https://github.com/ChanyoungPark07/wildfire-risk" target="_blank" class="btn">Q1 GitHub Repository</a>
+          </div>
+        </details>
+      </div>
+
+      <h4>Spatial Perimeters</h4>
+      <div class="subsection-content">
+        <p>
+          To capture the spatial context of structures within WUI areas, we incorporate:
+        </p>
+        <ul class="data-list">
+          <li><strong>SILVIS Labs WUI dataset</strong> — Wildland-Urban Interface classifications and perimeters</li>
+          <li><strong>MTBS wildfire perimeters</strong> — fire boundary data</li>
+        </ul>
+      </div>
+      <hr class="section-divider">
+      <h3>Data Processing & Feature Engineering</h3>
+
+      <p>
+        To construct a dataset ready for modeling, we performed three major processing steps:
+        cleaning and standardization, spatial integration, and final feature engineering.
+      </p>
+
+      <h4>Cleaning & Standardization</h4>
+      <div class="subsection-content">
+        <p>
+          We filtered the DINS dataset to include only residential structures classified as
+          <strong>Destroyed (&gt;50%)</strong> or <strong>No Damage</strong>.
+          Column names were standardized, invalid entries were converted to missing values,
+          and columns with excessive missingness were removed.
+        </p>
+        <p>
+          All spatial datasets were reprojected into a consistent coordinate system
+          to ensure accurate spatial joins.
+        </p>
+      </div>
+
+      <h4>Spatial Integration</h4>
+      <div class="subsection-content">
+        <p>
+          We restricted our analysis to structures located within
+          <strong>Wildland-Urban Interface (WUI)</strong> areas by clipping
+          SILVIS WUI data to selected wildfire perimeters.
+        </p>
+        <p>
+          Structures were spatially joined to fire severity data using a
+          <strong>30-meter buffer</strong> to capture localized burn conditions.
+          Additional building characteristics were incorporated using
+          nearest-neighbor spatial matching with the NSI dataset.
+        </p>
+      </div>
+
+      <h4>Final Feature Engineering</h4>
+      <div class="subsection-content">
+        <p>
+          Missing categorical variables were imputed using an
+          <strong>“Unknown”</strong> category, and all categorical features were
+          one-hot encoded.
+        </p>
+        <p>
+          Structural and environmental variables were combined into a unified dataset,
+          and the damage outcome was encoded as a <strong>binary target variable (1 for Destroyed, 0 for No Damage).</strong>
+        </p>
+      </div>
+
+      <details class="expandable">
+        <summary>View additional technical preprocessing details</summary>
+        <div class="expand-content">
+          <p><strong>Key preprocessing steps included:</strong></p>
+          <ul class="data-list">
+            <li>Filtering to 30 California wildfires.</li>
+            <li>Reprojecting coordinates to EPSG:5070 for spatial consistency.</li>
+            <li>Applying spatial joins with 30-meter buffers.</li>
+            <li>Nearest-neighbor matching (1500m threshold) to integrate NSI data and remove duplicates.</li>
+            <li>Removing columns with all false values after one-hot encoding.</li>
+            <li>Imputing missing categorical values as "Unknown".</li>
+            <li>Binary target encoding (1 = Destroyed, 0 = No Damage).</li>
+          </ul>
+        </div>
+      </details>
+      <p>The resulting dataset contains <strong>structure-level</strong> environmental and structural features, with a binary target variable indicating whether each structure was destroyed or experienced no damage during a wildfire.</p>
+      <hr class="section-divider">
 
       <h3>Structural Damage Model</h3>
+      <p>
+        We trained two models, <strong>Random Forest</strong> and <strong>Neural Network</strong>, to predict whether a residential structure would be <strong>Destroyed (&gt;50%)</strong> or experience <strong>No Damage</strong> during a wildfire.
+        Using two different modeling approaches allows us to compare performance and identify key predictive features across methods.
+      </p>
+
+      <p>
+        All cross-validation was grouped at the <strong>wildfire level</strong> to prevent data leakage between training and validation folds.
+      </p>
+
       <h4>Random Forest Model</h4>
-      <p>To be added</p>
+      <div class="subsection-content">
+        <p>
+          The Random Forest model serves as a strong tree-based model capable of capturing nonlinear relationships between structural and environmental variables.
+        </p>
+        <p>
+          Hyperparameters were tuned using randomized search with grouped cross-validation, including parameters such as maximum tree depth and minimum samples per leaf.
+        </p>
+        <p>
+          After selecting the best performing model, we performed threshold tuning on the validation set to find the threshold that would maximize the validation F1 score. Then the final model was tested on the test set, and performance metrics were calculated.
+        </p>
+        <details class="expandable">
+          <summary>View additional Random Forest technical details</summary>
+          <div class="expand-content">
+            <ul class="data-list">
+              <li><strong>Cross-validation:</strong> 3-fold GroupKFold (grouped by wildfire)</li>
+              <li><strong>Search method:</strong> RandomSearchCV with 20 sampled configurations</li>
+              <li><strong>Class weight:</strong> balanced</li>
+              <li><strong>n_estimators:</strong> {300, 500, 800}</li>
+              <li><strong>max_depth:</strong> {20, 40, 60, None}</li>
+              <li><strong>min_samples_split:</strong> {2, 5, 10}</li>
+              <li><strong>min_samples_leaf:</strong> {1, 2, 5}</li>
+              <li><strong>max_features:</strong> {"sqrt", 0.3, 0.5}</li>
+              <li><strong>Threshold tuning range:</strong> 0.2 - 0.8</li>
+            </ul>
+          </div>
+        </details>
+      </div>
 
       <h4>Neural Network Model</h4>
-      <p>To be added</p>
+      <div class="subsection-content">
+        <p>
+          A feedforward neural network was trained to capture complex interactions between structural and environmental variables.
+        </p>
+        <p>
+          To reduce noise and improve model performance, we performed feature selection using a LightGBM model and retained features contributing to the top 95% cumulative importance.
+        </p>
+        <p>
+          Hyperparameters were selected using a grid search over a chosen number of neurons per layer, dropout rate, learning rate, and regularization rate, with cross-validation and early stopping based on validation metrics.
+        </p>
+        <p>
+          The best hyperparameters were then run on the test set with early stopping, resulting in the final neural network model used to create performance metrics.
+        </p>
+        <details class="expandable">
+        <summary>View additional Neural Network technical details</summary>
+        <div class="expand-content">
+          <ul class="data-list">
+            <li><strong>Cross-validation:</strong> 5-fold cross-validation on combined training + validation sets</li>
+            <li><strong>Search method:</strong> Grid search over architecture and regularization parameters</li>
+            <li><strong>Architecture (units per layer):</strong> [128, 64, 32, 16, 8]</li>
+            <li><strong>Activation:</strong> ReLU</li>
+            <li><strong>Dropout rate:</strong> 0.15</li>
+            <li><strong>Batch normalization:</strong> Enabled</li>
+            <li><strong>Learning rate:</strong> 0.01</li>
+            <li><strong>L2 regularization:</strong> 0.001</li>
+            <li><strong>Early stopping:</strong> 15-epoch patience (best validation epoch selected)</li>
+          </ul>
+        </div>
+      </details>
+      </div>
+
+      <h4>Evaluation Metrics</h4>
+      <div class="subsection-content">
+        <p>
+          Due to class imbalance, we optimized <strong>Precision-Recall AUC (PR-AUC)</strong> during cross-validation and used validation-based probability threshold tuning.
+        </p>
+        <p>
+          Final model performance was evaluated using <strong>Accuracy, Precision, Recall, and F1-score</strong>.
+        </p>
+      </div>
+
+      <p>
+        Using the final trained models, we generated:
+      </p>
+
+      <ul class="data-list">
+        <li>Model performance metrics and confusion matrices</li>
+        <li>Feature importance analysis using SHAP</li>
+        <li>Fire-level structural loss reports</li>
+        <li>Fire-level damage map visualizations (actual outcome, predicted outcome, and predicted probability)</li>
+      </ul>
     </section>
 
+
+    <!-- Results section -->
     <section class="card" id="results">
       <h2>Results</h2>
-      <p>To be added</p>
+      <p>To be added (including visualizations, performance metrics, and feature importance analysis)</p>
 
       <h3>Interpretation & Discussion</h3>
       <p>To be added</p>
     </section>
 
+
+    <!-- Conclusion section -->
     <section class="card" id="conclusion">
       <h2>Conclusion</h2>
       <p>To be added</p>
     </section>
 
+
+    <!-- Links section -->
     <section class="card" id="links">
-      <h2>Links</h2>
+      <h2>Links (*Report and Poster aren't available yet)</h2>
 
       <div class="links-row">
-        <a class="btn" href="report.pdf" target="_blank">Project Report</a>
-        <a class="btn" href="poster.pdf" target="_blank">Project Poster</a>
+        <a class="btn" href="project-report.pdf" target="_blank">Project Report</a>
+        <a class="btn" href="project-poster.pdf" target="_blank">Project Poster</a>
         <a class="btn" href="https://github.com/ChanyoungPark07/structural_damage_wui" target="_blank">Code Repository</a>
       </div>
     </section>
 
   </main>
-
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <button type="button" class="modal-close" aria-label="Close image">✕</button>
+      <img id="modalImage" class="modal-img" alt="">
+    </div>
+  </div>
   <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
   <script src="main.js"></script>
 
