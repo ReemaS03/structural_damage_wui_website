@@ -217,14 +217,23 @@ h4 {
 
 .image-container {
     position: relative;
-    display: inline-block;
+    display: block; 
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 /* -- bottom right expand button */
 .expand-btn {
     position: absolute;
-    bottom: 6%;
-    right: 2%;
+    bottom: clamp(10px, 6%, 18px);
+    right: clamp(10px, 2%, 18px);
     background: #000000; 
     color: #fafafa;
     border: none;
@@ -244,21 +253,30 @@ h4 {
     display: none;
     position: fixed;
     z-index: 3000;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0,0,0,0.85);
     align-items: center;
     justify-content: center;
+    padding: 24px;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 95vw;
+    max-height: 90vh;
 }
 
 .modal-img {
-    max-width: 95%;
-    max-height: 90%;
+    display: block;
+    max-width: 95vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+
     border-radius: 12px;
     background: #fafafa;
     padding: 12px;
+    box-sizing: border-box;
 }  
 
 body.modal-open{
@@ -269,7 +287,7 @@ body.modal-open{
 .modal-close{
     position: absolute;
     top: 2%;
-    right: 2%;
+    right: 3%;
     background: #000000;
     color: #fafafa;
     border: none;
@@ -283,11 +301,6 @@ body.modal-open{
 .modal-close:hover{
     background: #074D43;
     transform: scale(1.05);
-}
-
-.modal-content {
-    position: relative;
-    display: inline-block;
 }
 
 /* -- horizontal divider used in multiple sections */
