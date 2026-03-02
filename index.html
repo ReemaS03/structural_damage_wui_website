@@ -311,9 +311,6 @@
           A feedforward neural network was trained to capture complex interactions between structural and environmental variables.
         </p>
         <p>
-          To reduce noise and improve model performance, we performed feature selection using a LightGBM model and retained features contributing to the top 95% cumulative importance.
-        </p>
-        <p>
           Hyperparameters were selected using a grid search over a chosen number of neurons per layer, dropout rate, learning rate, and regularization rate, with cross-validation and early stopping based on validation metrics.
         </p>
         <p>
@@ -364,6 +361,69 @@
     <section class="card" id="results">
       <h2>Results</h2>
       <p>To be added (including visualizations, performance metrics, and feature importance analysis)</p>
+      <h3>Interactive Fire x Model Demo</h3>
+      <p class="demo-intro">
+        Select a fire and model to view the corresponding damage maps (actual, predicted, probability) (Demo currently includes Atlas + Glass for RF model only)
+      </p>
+
+      <div class="demo-card" id="demo">
+        <!-- Row 1: dropdowns -->
+        <div class="demo-controls">
+          <label class="demo-field">
+            <span>Fire</span>
+            <select id="fireSelect" class="demo-select">
+              <option value="" selected>Select a fire...</option>
+              <option value="atlas">Atlas</option>
+              <option value="glass">Glass</option>
+            </select>
+          </label>
+
+          <label class="demo-field">
+            <span>Model</span>
+            <select id="modelSelect" class="demo-select">
+              <option value="" selected>Select a model...</option>
+              <option value="rf">Random Forest</option>
+              <option value="nn" disabled>Neural Network</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Row 2: image OR empty -->
+        <div class="demo-visual">
+          <div id="demoEmpty" class="demo-empty">
+            Choose a fire + model to view maps.
+          </div>
+
+          <div id="demoImageWrap" class="image-container demo-image" style="display:none;">
+            <img id="demoImage" src="" alt="Selected fire/model damage maps">
+            <button type="button" class="expand-btn"
+                    aria-label="Expand image"
+                    onclick="openModal(document.getElementById('demoImage'))">⤢</button>
+          </div>
+        </div>
+
+        <!-- Row 3: text -->
+        <div id="demoText" class="demo-text" style="display:none;">
+          <div class="demo-meta">
+            <div><strong>Fire:</strong> <span id="demoFireName"></span></div>
+            <div><strong>Fire Type:</strong> <span id="demoFireType"></span></div>
+            <div><strong>Model:</strong> <span id="demoModelName"></span></div>
+          </div>
+          <div class="demo-metrics-row">
+            <div class="demo-metrics">
+              <div class="demo-metrics-title">This Fire</div>
+              <div>F1: <span id="demoFireF1"></span></div>
+              <div>Accuracy: <span id="demoFireAcc"></span></div>
+            </div>
+            <div class="demo-metrics">
+              <div class="demo-metrics-title">This Fire Type (Overall)</div>
+              <div>F1: <span id="demoTypeF1"></span></div>
+              <div>Accuracy: <span id="demoTypeAcc"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <h3>Interpretation & Discussion</h3>
       <p>To be added</p>

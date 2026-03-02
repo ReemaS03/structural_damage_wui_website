@@ -324,6 +324,156 @@ body.modal-open{
     margin-left: 18px;
 }
 
+/* -- Interactive demo (Fire x Model) */
+.demo-intro{
+    max-width: 850px;
+    margin: 0 auto 12px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.demo-card{
+    background: rgba(7, 77, 67, 0.28);   
+    border: 2px solid rgba(7, 77, 67, 0.28);   
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(17, 17, 17, 0.06);
+}
+
+.demo-controls{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.demo-field{
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.demo-field span{
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.demo-select{
+    width: 100%;
+    padding: 11px 42px 11px 12px; 
+    border-radius: 12px;
+    border: 1px solid #e3e3e3;
+    background: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+    linear-gradient(45deg, transparent 50%, #074D43 50%),
+    linear-gradient(135deg, #074D43 50%, transparent 50%);
+    background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+
+    box-shadow: 0 6px 16px rgba(17, 17, 17, 0.06);
+    transition: border 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.demo-select:hover{
+    border-color: rgba(7, 77, 67, 0.35);
+    box-shadow: 0 10px 24px rgba(17, 17, 17, 0.08);
+    transform: translateY(-1px);
+}
+
+.demo-select:focus{
+    outline: none;
+    border-color: #074D43;
+    box-shadow: 0 0 0 4px rgba(7, 77, 67, 0.12), 0 10px 24px rgba(17, 17, 17, 0.08);
+}
+
+.demo-visual{
+    margin-top: 6px;
+}
+
+.demo-empty{
+    border: 1px dashed #d9d9d9;
+    border-radius: 12px;
+    padding: 18px;
+    background: #fafafa;
+    text-align: center;
+    opacity: 0.75;
+}
+
+.demo-image{
+    border: 1px solid #e9e9e9;
+    background: #fff;
+}
+
+.demo-text{
+    margin-top: 12px;
+    border: 1px solid #e9e9e9;
+    border-radius: 14px;
+    padding: 14px 14px;
+    background: #fafafa;
+}
+
+.demo-text-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 14px;
+    align-items: start;
+}
+
+.demo-meta{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px 14px;
+    margin-bottom: 10px;
+}
+
+.demo-metrics-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 14px;
+    margin-bottom: 8px;
+}
+
+.demo-metrics{
+    border-left: 3px solid #ddd;
+    padding-left: 10px;
+    background: #fff;
+    border: 1px solid #ededed;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.demo-metrics-title{
+    font-weight: 800;
+    opacity: 0.9;
+    margin-bottom: 6px;
+}
+
+.demo-blurb{
+    margin: 10px 0 0;
+    opacity: 0.9;
+}
+
+/* Mobile: stack dropdowns + text grid */
+@media (max-width: 700px){
+    .demo-controls{
+        grid-template-columns: 1fr;
+    }
+    .demo-text-grid{
+        grid-template-columns: 1fr;
+    }
+}
+
 /* -- Expandable sections (used throughout website) */
 .expandable {
     padding: 12px 14px;
