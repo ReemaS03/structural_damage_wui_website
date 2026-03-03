@@ -68,47 +68,65 @@ const demoImage = document.getElementById("demoImage");
 const demoText = document.getElementById("demoText");
 
 const demoFireName = document.getElementById("demoFireName");
-const demoFireType = document.getElementById("demoFireType");
 const demoModelName = document.getElementById("demoModelName");
 
-const demoFireF1 = document.getElementById("demoFireF1");
-const demoFireAcc = document.getElementById("demoFireAcc");
-const demoTypeF1 = document.getElementById("demoTypeF1");
-const demoTypeAcc = document.getElementById("demoTypeAcc");
+const demoFireF1Und = document.getElementById("demoFireF1Und");
+const demoFireF1Des = document.getElementById("demoFireF1Des");
+const demoFireF1W   = document.getElementById("demoFireF1W");
+const demoFireAcc   = document.getElementById("demoFireAcc");
 
+const demoOverallF1Und = document.getElementById("demoOverallF1Und");
+const demoOverallF1Des = document.getElementById("demoOverallF1Des");
+const demoOverallF1W   = document.getElementById("demoOverallF1W");
+const demoOverallAcc   = document.getElementById("demoOverallAcc");
 
-// data for demo (atlas and glass with RF only for now)
-const demoData = {
-  "atlas_rf": {
-    fireName: "Atlas",
-    fireType: "Wind-driven",
-    modelName: "Random Forest",
-    imgSrc: "images/demo/atlas_rf_map.png",
-    metrics: {
-      fire: { f1: "0.597", acc: "0.657" },
-      type: { f1: "0.686", acc: "0.698" }
-    }
+const FIRE_INFO = {
+  french:   { fireName: "French"},
+  mosquito:{ fireName: "Mosquito"},
+  erskine: { fireName: "Erskine"},
+  carr:    { fireName: "Carr" }
+};
+
+// Overall test set metrics (same for all fires)
+const OVERALL_TEST_METRICS = {
+  rf: { f1Und: "0.696", f1Des: "0.908", f1W: "0.871", acc: "0.859" },
+  nn: { f1Und: "0.619",   f1Des: "0.928",   f1W: "0.873",   acc: "0.879" }
+};
+
+// Per-fire metrics for each model 
+const FIRE_METRICS = {
+  rf: {
+    french:   { f1Und: "0.940", f1Des: "0.531", f1W: "0.904", acc: "0.894" },
+    mosquito: { f1Und: "0.900", f1Des: "0.764", f1W: "0.860", acc: "0.860" },
+    erskine:  { f1Und: "0.0", f1Des: "0.978", f1W: "0.978", acc: "0.958" },
+    carr:     { f1Und: "0.0", f1Des: "0.905", f1W: "0.905", acc: "0.826" }
   },
-
-  "glass_rf": {
-    fireName: "Glass",
-    fireType: "Wind-driven",
-    modelName: "Random Forest",
-    imgSrc: "images/demo/glass_rf_map.png",
-    metrics: {
-      fire: { f1: "0.625", acc: "0.681" },
-      type: { f1: "0.686", acc: "0.698" }
-    }
+  nn: {
+    french:   { f1Und: "0.744", f1Des: "0.296", f1W: "0.705", acc: "0.625" },
+    mosquito: { f1Und: "0.633", f1Des: "0.592", f1W: "0.620", acc: "0.613" },
+    erskine:  { f1Und: "0.0", f1Des: "1.0", f1W: "1.0", acc: "1.0" },
+    carr:     { f1Und: "0.0", f1Des: "0.967", f1W: "0.967", acc: "0.936" }
   }
 };
 
+function modelFolder(model) {
+  return model === "rf" ? "random_forest" : "neural_network";
+}
+
+function modelLabel(model) {
+  return model === "rf" ? "Random Forest" : "Neural Network";
+}
+
+function imgPath(model, fire) {
+  return `images/demo/${modelFolder(model)}/${fire}_map.png`;
+}
 
 // Update demo when dropdowns change
 function updateDemo() {
   if (!fireSelect || !modelSelect) return;
 
-  const fire = fireSelect.value;
-  const model = modelSelect.value;
+  const fire = fireSelect.value;   
+  const model = modelSelect.value; 
 
   if (!fire || !model) {
     demoEmpty.textContent = "Choose a fire + model to view maps.";
@@ -118,10 +136,11 @@ function updateDemo() {
     return;
   }
 
-  const key = `${fire}_${model}`;
-  const item = demoData[key];
+  const info = FIRE_INFO[fire];
+  const fireMetrics = FIRE_METRICS?.[model]?.[fire];
+  const overall = OVERALL_TEST_METRICS?.[model];
 
-  if (!item) {
+  if (!info || !fireMetrics || !overall) {
     demoEmpty.textContent = "This fire/model pair isn't available in the demo yet.";
     demoEmpty.style.display = "block";
     demoImageWrap.style.display = "none";
@@ -129,17 +148,23 @@ function updateDemo() {
     return;
   }
 
-  demoImage.src = item.imgSrc;
-  demoImage.alt = `${item.fireName} - ${item.modelName} maps`;
+  demoImage.src = imgPath(model, fire);
+  demoImage.alt = `${info.fireName} - ${modelLabel(model)} maps`;
 
-  demoFireName.textContent = item.fireName;
-  demoFireType.textContent = item.fireType;
-  demoModelName.textContent = item.modelName;
+  demoFireName.textContent = info.fireName;
+  demoModelName.textContent = modelLabel(model);
 
-  demoFireF1.textContent = item.metrics.fire.f1;
-  demoFireAcc.textContent = item.metrics.fire.acc;
-  demoTypeF1.textContent = item.metrics.type.f1;
-  demoTypeAcc.textContent = item.metrics.type.acc;
+  // Metrics: this fire
+  demoFireF1Und.textContent = fireMetrics.f1Und;
+  demoFireF1Des.textContent = fireMetrics.f1Des;
+  demoFireF1W.textContent   = fireMetrics.f1W;
+  demoFireAcc.textContent   = fireMetrics.acc;
+
+  // Metrics: overall test set
+  demoOverallF1Und.textContent = overall.f1Und;
+  demoOverallF1Des.textContent = overall.f1Des;
+  demoOverallF1W.textContent   = overall.f1W;
+  demoOverallAcc.textContent   = overall.acc;
 
   demoEmpty.style.display = "none";
   demoImageWrap.style.display = "block";
@@ -149,5 +174,5 @@ function updateDemo() {
 if (fireSelect && modelSelect) {
   fireSelect.addEventListener("change", updateDemo);
   modelSelect.addEventListener("change", updateDemo);
-  updateDemo(); 
+  updateDemo();
 }

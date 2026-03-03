@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Wildfire Severity and Structural Damage Prediction</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
 </head>
 
 <body>
@@ -361,9 +362,9 @@
     <section class="card" id="results">
       <h2>Results</h2>
       <p>To be added (including visualizations, performance metrics, and feature importance analysis)</p>
-      <h3>Interactive Fire x Model Demo</h3>
+      <h3>Fire x Model Demo</h3>
       <p class="demo-intro">
-        Select a fire and model to view the corresponding damage maps (actual, predicted, probability) (Demo currently includes Atlas + Glass for RF model only)
+        Select a fire and model to view the corresponding damage maps (actual, predicted, probability)
       </p>
 
       <div class="demo-card" id="demo">
@@ -373,8 +374,10 @@
             <span>Fire</span>
             <select id="fireSelect" class="demo-select">
               <option value="" selected>Select a fire...</option>
-              <option value="atlas">Atlas</option>
-              <option value="glass">Glass</option>
+              <option value="french">French</option>
+              <option value="carr">Carr</option>
+              <option value="mosquito">Mosquito</option>
+              <option value="erskine">Erskine</option>
             </select>
           </label>
 
@@ -383,7 +386,7 @@
             <select id="modelSelect" class="demo-select">
               <option value="" selected>Select a model...</option>
               <option value="rf">Random Forest</option>
-              <option value="nn" disabled>Neural Network</option>
+              <option value="nn">Neural Network</option>
             </select>
           </label>
         </div>
@@ -405,21 +408,25 @@
         <!-- Row 3: text -->
         <div id="demoText" class="demo-text" style="display:none;">
           <div class="demo-meta">
-            <div><strong>Fire:</strong> <span id="demoFireName"></span></div>
-            <div><strong>Fire Type:</strong> <span id="demoFireType"></span></div>
-            <div><strong>Model:</strong> <span id="demoModelName"></span></div>
+            <div class="meta-item"><strong>Fire:</strong> <span id="demoFireName"></span></div>
+            <div class="meta-item"><strong>Model:</strong> <span id="demoModelName"></span></div>
           </div>
           <div class="demo-metrics-row">
             <div class="demo-metrics">
-              <div class="demo-metrics-title">This Fire</div>
-              <div>F1: <span id="demoFireF1"></span></div>
-              <div>Accuracy: <span id="demoFireAcc"></span></div>
-            </div>
-            <div class="demo-metrics">
-              <div class="demo-metrics-title">This Fire Type (Overall)</div>
-              <div>F1: <span id="demoTypeF1"></span></div>
-              <div>Accuracy: <span id="demoTypeAcc"></span></div>
-            </div>
+            <div class="demo-metrics-title">This Fire</div>
+            <div>F1-Score (Undamaged): <span id="demoFireF1Und"></span></div>
+            <div>F1-Score (Destroyed): <span id="demoFireF1Des"></span></div>
+            <div>F1-Score (Weighted): <span id="demoFireF1W"></span></div>
+            <div>Accuracy: <span id="demoFireAcc"></span></div>
+          </div>
+
+          <div class="demo-metrics">
+            <div class="demo-metrics-title">Overall Test Set</div>
+            <div>F1-Score (Undamaged): <span id="demoOverallF1Und"></span></div>
+            <div>F1-Score (Destroyed): <span id="demoOverallF1Des"></span></div>
+            <div>F1-Score (Weighted): <span id="demoOverallF1W"></span></div>
+            <div>Accuracy: <span id="demoOverallAcc"></span></div>
+          </div>
           </div>
         </div>
       </div>
@@ -428,7 +435,45 @@
       <h3>Interpretation & Discussion</h3>
       <p>To be added</p>
     </section>
+    
+    <!-- Interactive map section -->
+    <section id="demo">
+      <h2>Structure-Level Damage Map</h2>
+      <p class="map-description">
+        This map shows actual structural damage for two fires. <br>
+        Use the controls to explore spatial patterns of damaged and undamaged structures.
+      </p>
+      <p> Note: For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p>
+      <div class="demo-field-map">
+        <div class="map-row">
+          <span><strong>Fire Selection:</strong></span>
 
+          <select id="fireSelectMap" class="demo-select">
+            <option value="french" selected>French</option>
+            <option value="carr">Carr</option>
+          </select>
+          <button id="recenterBtn" type="button" class="demo-select recenter-btn">Recenter To Fire</button>
+        </div>
+
+        <div class="map-controls">
+          <label class="map-check">
+            <input type="checkbox" id="toggleStructures" checked>
+            Show All Structures
+          </label>
+
+          <label class="map-check">
+            <input type="checkbox" id="toggleDamaged" checked>
+            Show Damaged Structures
+          </label>
+
+          <label class="map-check">
+            <input type="checkbox" id="toggleUndamaged" checked>
+            Show Undamaged Structures
+          </label>
+        </div>
+      </div>
+      <div id="map"></div>
+    </section>
 
     <!-- Conclusion section -->
     <section class="card" id="conclusion">
@@ -457,6 +502,7 @@
   </div>
   <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
   <script src="main.js"></script>
-
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <script src="map.js"></script>
 </body>
 </html>

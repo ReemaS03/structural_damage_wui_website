@@ -327,8 +327,7 @@ body.modal-open{
 /* -- Interactive demo (Fire x Model) */
 .demo-intro{
     max-width: 850px;
-    margin: 0 auto 12px;
-    text-align: center;
+    margin: 0 6px 12px;
     opacity: 0.9;
 }
 
@@ -365,12 +364,11 @@ body.modal-open{
     width: 100%;
     padding: 11px 42px 11px 12px; 
     border-radius: 12px;
-    border: 1px solid #e3e3e3;
     background: #ffffff;
     font-size: 1rem;
     font-weight: 600;
     color: #111;
-
+    border: 2px solid rgba(7, 77, 67, 0.28);   
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -428,9 +426,21 @@ body.modal-open{
 
 .demo-meta{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px 14px;
-    margin-bottom: 10px;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.demo-meta .meta-item:nth-child(1){
+    grid-column: 2;            
+    justify-self: end;         
+    margin-right: 40px;       
+}
+
+.demo-meta .meta-item:nth-child(2){
+    grid-column: 3;          
+    justify-self: start;      
+    margin-left: 40px;         
 }
 
 .demo-metrics-row{
@@ -453,11 +463,6 @@ body.modal-open{
     font-weight: 800;
     opacity: 0.9;
     margin-bottom: 6px;
-}
-
-.demo-blurb{
-    margin: 10px 0 0;
-    opacity: 0.9;
 }
 
 /* Mobile: stack dropdowns + text grid */
@@ -561,4 +566,83 @@ body.modal-open{
 .back-to-top:hover{
     background: #111;
     color: #fff;
+}
+
+/* -- Map and controls */
+#map {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+.demo-field-map{
+    display: grid;
+    gap: 10px;             
+    font-weight: 600;
+    border: 2px solid rgba(7, 77, 67, 0.28);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+#fireSelectMap {
+    width: auto;          
+    min-width: 160px; 
+}
+
+.map-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+}
+
+.map-check input[type="checkbox"] {
+    accent-color: #074D43;
+    cursor: pointer;
+}
+
+.map-check {
+    cursor: pointer;
+}
+
+.recenter-btn{
+    width: auto;
+    display: flex;             
+    align-items: center;       
+    justify-content: center;   
+    text-align: center;    
+    border-radius: 10px;
+    border: 2px solid rgba(7, 77, 67, 0.28);
+    background: white;
+    font-weight: 600;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.recenter-btn:hover{
+    border-color: rgba(7, 77, 67, 0.6);
+}
+
+.map-controls{
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-description {
+  text-align: center;
+  max-width: 800px;  
+  margin: 0 auto 1rem auto;  
+  line-height: 1.6;
+}
+
+.map-check{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;      
 }
