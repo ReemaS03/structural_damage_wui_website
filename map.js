@@ -1,4 +1,4 @@
-mapboxgl.accessToken = ["pk", "eyJ1IjoicmVlbWFzMDMiLCJhIjoiY21tYXczc3YyMGd1MDJwb213cnBnbjV6OSJ9", "3sdDY2GCTpKt-tKZI8orlA"].join(".");
+mapboxgl.accessToken = ["pk", "eyJ1IjoicmVlbWFzMDMiLCJhIjoiY203ZGtjYTIwMDN5ejJtcTN0YXB0d2dqNiJ9", "jE6KY57HvSYGqgyvxQeGPQ"].join(".");
 
 const FIRE_FILES = {
     french: {
