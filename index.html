@@ -10,36 +10,37 @@
 
 <body>
   <main>
-
-    <!-- Header and navigation bar -->
     <header id="top">
       <h1>Wildfire Severity and Structural Damage Prediction in Wildland-Urban Interface (WUI) Areas</h1>
       <p><em>Understanding and predicting wildfire impacts on residential structures in Wildland-Urban Interface (WUI) areas.</em></p>
     </header>
 
     <nav class="navbar">
-
       <div class="nav-left">
         <a href="https://datascience.ucsd.edu" target="_blank">
           <img src="images/hdsi-logo.png" alt="HDSI Logo" class="logo">
         </a>
       </div>
 
-    
-      <div class="nav-tabs">
-        <a href="#overview">Overview</a>
-        <a href="#approach">Approach</a>
-        <a href="#results">Results</a>
-        <a href="#conclusion">Conclusion</a>
-        <a href="#links">Links</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        ☰
+      </button>
+
+      <div class="nav-menu" id="navMenu">
+        <div class="nav-tabs">
+          <a href="#overview">Overview</a>
+          <a href="#approach">Approach</a>
+          <a href="#results">Results</a>
+          <a href="#conclusion">Conclusion</a>
+          <a href="#links">Links</a>
+        </div>
       </div>
-    
+
       <div class="nav-right">
         <a href="https://www.cotality.com" target="_blank">
           <img src="images/cotality-logo.png" alt="Cotality Logo" class="logo">
         </a>
       </div>
-
     </nav>
 
 
@@ -71,6 +72,7 @@
             Despite growing wildfire risk, publicly accessible tools that assess damage at the
             <strong>individual structure level</strong> remain limited.
           </p>
+           <hr class="section-divider overview-divider">
         </div>
 
         <figure class="overview-visual">
@@ -89,7 +91,6 @@
           </figcaption>
 
         </figure>
-
         <!-- Row 2 -->
         <div class="overview-label row2">
           <h3>What We're Doing</h3>
@@ -183,8 +184,12 @@
         <details class="expandable">
           <summary>View Q1 project deliverables</summary>
           <div class="expand-content">
-            <a href="documents/q1-report.pdf" target="_blank" class="btn">Q1 Report</a>
-            <a href="https://github.com/ChanyoungPark07/wildfire-risk" target="_blank" class="btn">Q1 GitHub Repository</a>
+            <a href="documents/q1-report.pdf" target="_blank" class="btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-notebook-text-icon lucide-notebook-text"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9.5 8h5"/><path d="M9.5 12H16"/><path d="M9.5 16H14"/></svg>
+              Q1 Report</a>
+            <a href="https://github.com/ChanyoungPark07/wildfire-risk" target="_blank" class="btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+              Q1 GitHub Repository</a>
           </div>
         </details>
       </div>
@@ -349,7 +354,7 @@
         Using the final trained models, we generated:
       </p>
 
-      <ul class="data-list">
+      <ul class="data-list-2">
         <li>Model performance metrics and confusion matrices</li>
         <li>Feature importance analysis using SHAP</li>
         <li>Fire-level structural loss reports</li>
@@ -407,9 +412,9 @@
 
         <!-- Row 3: text -->
         <div id="demoText" class="demo-text" style="display:none;">
-          <div class="demo-meta">
-            <div class="meta-item"><strong>Fire:</strong> <span id="demoFireName"></span></div>
-            <div class="meta-item"><strong>Model:</strong> <span id="demoModelName"></span></div>
+          <div class="demo-meta-row">
+            <div class="demo-meta"><strong>Fire:</strong><span id="demoFireName"></span></div>
+            <div class="demo-meta"><strong>Model:</strong><span id="demoModelName"></span></div>
           </div>
           <div class="demo-metrics-row">
             <div class="demo-metrics">
@@ -439,11 +444,11 @@
     <!-- Interactive map section -->
     <section id="demo">
       <h2>Structure-Level Damage Map</h2>
-      <p class="map-description">
+      <p class="section-description">
         This map shows actual structural damage for two fires. <br>
         Use the controls to explore spatial patterns of damaged and undamaged structures.
       </p>
-      <p> Note: For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p>
+      <p class="section-description"><strong>Note:</strong> For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p>
       <div class="demo-field-map">
         <div class="map-row">
           <span><strong>Fire Selection:</strong></span>
@@ -484,12 +489,24 @@
 
     <!-- Links section -->
     <section class="card" id="links">
-      <h2>Links (*Report and Poster aren't available yet)</h2>
-
+      <h2>Links</h2>
+      <p class="section-description">For more details on our project, check out our report, poster, and code repositories:</p>
+      <p class="section-description"><strong>Note:</strong> Report and Poster are not available yet.</p>
       <div class="links-row">
-        <a class="btn" href="project-report.pdf" target="_blank">Project Report</a>
-        <a class="btn" href="project-poster.pdf" target="_blank">Project Poster</a>
-        <a class="btn" href="https://github.com/ChanyoungPark07/structural_damage_wui" target="_blank">Code Repository</a>
+        <a class="btn" href="project-report.pdf" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-notebook-text-icon lucide-notebook-text"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9.5 8h5"/><path d="M9.5 12H16"/><path d="M9.5 16H14"/></svg>
+          Project Report</a>
+        <a class="btn" href="project-poster.pdf" target="_blank"> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-presentation-icon lucide-presentation"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg>
+          Project Poster</a>
+        <a class="btn" href="https://github.com/ChanyoungPark07/structural_damage_wui" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          Project Repository
+        </a>
+        <a class="btn" href="https://github.com/ReemaS03/structural_damage_wui_website" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          Website Repository
+        </a>
       </div>
     </section>
 

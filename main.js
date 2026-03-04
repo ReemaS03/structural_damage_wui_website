@@ -1,3 +1,23 @@
+// navbar mobile version
+const nav = document.querySelector(".navbar");
+const navToggle = document.querySelector(".nav-toggle");
+
+if (nav && navToggle) {
+  navToggle.addEventListener("click", () => {
+    const open = nav.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  nav.querySelectorAll('.nav-tabs a').forEach(a => {
+    a.addEventListener("click", () => {
+      if (window.innerWidth <= 700) {
+        nav.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
+
 // show "back to top" after user scrolls a bit
 const btn = document.querySelector('.back-to-top');
 window.addEventListener('scroll', () => {
