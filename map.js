@@ -156,6 +156,41 @@ async function loadFire(key) {
     map.getSource('fire-perimeter').setData(perimGeojson);
     map.getSource('fire-structures').setData(structGeojson);
 
+    const note = document.getElementById('structure-note');
+    const undamagedCheckbox = document.getElementById('toggleUndamaged');
+    const allCheckbox = document.getElementById('toggleStructures');
+
+    const hasUndamaged = (structGeojson.features || []).some(
+    f => f?.properties?.damage === 0
+    );
+
+    if (!hasUndamaged) {
+
+    if (note) {
+        note.textContent = "Note: No undamaged structures are recorded for this fire.";
+    }
+
+    if (undamagedCheckbox) {
+        undamagedCheckbox.checked = false;
+        undamagedCheckbox.disabled = true;
+    }
+
+    if (allCheckbox) {
+        allCheckbox.checked = true;
+    }
+
+    } else {
+
+    if (note) {
+        note.textContent = "";
+    }
+
+    if (undamagedCheckbox) {
+        undamagedCheckbox.disabled = false;
+    }
+
+    }
+
     userInteracted = false;
     const recenterBtn = document.getElementById('recenterBtn');
     if (recenterBtn) recenterBtn.style.display = 'none';
@@ -211,29 +246,33 @@ function applyMapStructureState() {
 }
 
 function syncCheckboxesFromAll() {
-    const allEl = document.getElementById('toggleStructures');
-    const damEl = document.getElementById('toggleDamaged');
-    const undEl = document.getElementById('toggleUndamaged');
-    if (!allEl || !damEl || !undEl) return;
+  const allEl = document.getElementById('toggleStructures');
+  const damEl = document.getElementById('toggleDamaged');
+  const undEl = document.getElementById('toggleUndamaged');
+  if (!allEl || !damEl || !undEl) return;
 
-    if (!allEl.checked) {
-        damEl.checked = false;
-        undEl.checked = false;
-    } else {
-        damEl.checked = true;
-        undEl.checked = true;
-    }
-    applyMapStructureState();
+  if (!allEl.checked) {
+    damEl.checked = false;
+
+    if (!undEl.disabled) undEl.checked = false;
+  } else {
+    damEl.checked = true;
+
+    if (!undEl.disabled) undEl.checked = true;
+    else undEl.checked = false; 
+  }
+
+  applyMapStructureState();
 }
 
 function syncAllFromSubcategories() {
-    const allEl = document.getElementById('toggleStructures');
-    const damEl = document.getElementById('toggleDamaged');
-    const undEl = document.getElementById('toggleUndamaged');
-    if (!allEl || !damEl || !undEl) return;
+  const allEl = document.getElementById('toggleStructures');
+  const damEl = document.getElementById('toggleDamaged');
+  const undEl = document.getElementById('toggleUndamaged');
+  if (!allEl || !damEl || !undEl) return;
 
-    allEl.checked = (damEl.checked && undEl.checked);
-    applyMapStructureState();
+  allEl.checked = undEl.disabled ? damEl.checked : (damEl.checked && undEl.checked);
+  applyMapStructureState();
 }
 
 // Recenter 
@@ -288,7 +327,7 @@ map.on('load', async () => {
         'icon-allow-overlap': true
         },
         paint: {
-        'icon-opacity': 0.25,
+        'icon-opacity': 0.5,
         'icon-color': [
             'match',
             ['get', 'damage'],

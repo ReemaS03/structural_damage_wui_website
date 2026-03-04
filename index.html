@@ -119,6 +119,46 @@
       </div>
     </section>
 
+    <!-- Interactive map section -->
+    <section id="demo">
+      <h2>Structure-Level Damage Map</h2>
+      <p class="section-description">
+        This map shows actual structural damage for two fires. <br>
+        Use the controls to explore spatial patterns of damaged and undamaged structures.
+      </p>
+      <!-- <p class="section-description"><strong>Note:</strong> For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p> -->
+      <div class="demo-field-map">
+        <div class="map-row">
+          <span><strong>Fire Selection:</strong></span>
+
+          <select id="fireSelectMap" class="demo-select">
+            <option value="french" selected>French</option>
+            <option value="carr">Carr</option>
+          </select>
+          <button id="recenterBtn" type="button" class="demo-select recenter-btn">Recenter To Fire</button>
+        </div>
+
+        <div class="map-controls">
+          <label class="map-check">
+            <input type="checkbox" id="toggleStructures" checked>
+            Show All Structures
+          </label>
+
+          <label class="map-check">
+            <input type="checkbox" id="toggleDamaged" checked>
+            Show Damaged Structures
+          </label>
+
+          <label class="map-check">
+            <input type="checkbox" id="toggleUndamaged" checked>
+            Show Undamaged Structures
+          </label>
+        </div>
+        <p id="structure-note" class="map-note"></p>
+      </div>
+      <div id="map"></div>
+    </section>
+
     <!-- Approach section -->
     <section class="card" id="approach">
       <h2>Our Approach</h2>
@@ -221,7 +261,7 @@
           and columns with excessive missingness were removed.
         </p>
         <p>
-          All spatial datasets were reprojected into a consistent coordinate system
+          All datasets were reprojected into a consistent coordinate system
           to ensure accurate spatial joins.
         </p>
       </div>
@@ -291,8 +331,19 @@
           Hyperparameters were tuned using randomized search with grouped cross-validation, including parameters such as maximum tree depth and minimum samples per leaf.
         </p>
         <p>
-          After selecting the best performing model, we performed threshold tuning on the validation set to find the threshold that would maximize the validation F1 score. Then the final model was tested on the test set, and performance metrics were calculated.
+          After selecting the best performing model, we performed threshold tuning on the validation set to find the threshold that would maximize the validation F1 score.
         </p>
+
+        <p>
+          To test whether wildfire characteristics affect model performance, we also trained Random Forest models on
+          six fire subsets (using the same training, tuning, and threshold optimization pipeline).
+        </p>
+        <ul class="data-list">
+          <li><strong>All fires</strong></li>
+          <li><strong>Small fires</strong> (fewer structure records)</li>
+          <li><strong>Wind-driven</strong> vs <strong>plume-driven</strong> fires</li>
+          <li><strong>Low severity</strong> vs <strong>high severity</strong> fires (based on MTBS burn severity classification)</li>
+        </ul>
         <details class="expandable">
           <summary>View additional Random Forest technical details</summary>
           <div class="expand-content">
@@ -306,6 +357,9 @@
               <li><strong>min_samples_leaf:</strong> {1, 2, 5}</li>
               <li><strong>max_features:</strong> {"sqrt", 0.3, 0.5}</li>
               <li><strong>Threshold tuning range:</strong> 0.2 - 0.8</li>
+              <li><strong>Subset analysis:</strong> trained 6 RF variants (all, small, wind-driven, plume-driven, low severity, high severity)</li>
+              <li><strong>Severity split:</strong> low/high defined by whether &lt;33% / &gt;33% of pixels are MTBS severity 3–4</li>
+              <li><strong>Pipeline:</strong> same tuning + threshold optimization + feature selection for each subset</li>
             </ul>
           </div>
         </details>
@@ -440,49 +494,10 @@
       <h3>Interpretation & Discussion</h3>
       <p>To be added</p>
     </section>
-    
-    <!-- Interactive map section -->
-    <section id="demo">
-      <h2>Structure-Level Damage Map</h2>
-      <p class="section-description">
-        This map shows actual structural damage for two fires. <br>
-        Use the controls to explore spatial patterns of damaged and undamaged structures.
-      </p>
-      <p class="section-description"><strong>Note:</strong> For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p>
-      <div class="demo-field-map">
-        <div class="map-row">
-          <span><strong>Fire Selection:</strong></span>
-
-          <select id="fireSelectMap" class="demo-select">
-            <option value="french" selected>French</option>
-            <option value="carr">Carr</option>
-          </select>
-          <button id="recenterBtn" type="button" class="demo-select recenter-btn">Recenter To Fire</button>
-        </div>
-
-        <div class="map-controls">
-          <label class="map-check">
-            <input type="checkbox" id="toggleStructures" checked>
-            Show All Structures
-          </label>
-
-          <label class="map-check">
-            <input type="checkbox" id="toggleDamaged" checked>
-            Show Damaged Structures
-          </label>
-
-          <label class="map-check">
-            <input type="checkbox" id="toggleUndamaged" checked>
-            Show Undamaged Structures
-          </label>
-        </div>
-      </div>
-      <div id="map"></div>
-    </section>
 
     <!-- Conclusion section -->
     <section class="card" id="conclusion">
-      <h2>Conclusion</h2>
+      <h2>Conclusion (*WIP)</h2>
       <p>To be added</p>
     </section>
 
