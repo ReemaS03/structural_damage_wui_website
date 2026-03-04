@@ -103,21 +103,20 @@ function fitBoundsToPolygonGeoJSON(polyGeojson, padding = 65) {
     }
 
         if (g.type === 'MultiPolygon') {
-        for (const poly of (g.coordinates || [])) {
-            for (const coord of (poly?.[0] || [])) {
-            bounds.extend(coord);
-            extended += 1;
+            for (const poly of (g.coordinates || [])) {
+                for (const coord of (poly?.[0] || [])) {
+                bounds.extend(coord);
+                extended += 1;
+                }
             }
         }
     }
-}
-
-  if (extended > 0) {
-    suppressNextMoveEnd = true; 
-    map.fitBounds(bounds, { padding });
-    return true;
-  }
-  return false;
+    if (extended > 0) {
+        suppressNextMoveEnd = true; 
+        map.fitBounds(bounds, { padding });
+        return true;
+    }
+    return false;
 }
 
 function jumpToFirstPoint(pointGeojson) {
@@ -165,30 +164,33 @@ async function loadFire(key) {
     );
 
     if (!hasUndamaged) {
+        if (note) {
+            note.textContent = "Note: No undamaged structures are recorded for this fire.";
+        }
 
-    if (note) {
-        note.textContent = "Note: No undamaged structures are recorded for this fire.";
-    }
-
-    if (undamagedCheckbox) {
-        undamagedCheckbox.checked = false;
-        undamagedCheckbox.disabled = true;
-    }
-
-    if (allCheckbox) {
-        allCheckbox.checked = true;
-    }
-
+        if (undamagedCheckbox) {
+            undamagedCheckbox.checked = false;
+            undamagedCheckbox.disabled = true;
+        }
+        syncAllFromSubcategories();
     } else {
+        if (note) {
+            note.textContent = "";
+        }
 
-    if (note) {
-        note.textContent = "";
-    }
+        if (undamagedCheckbox) {
+            undamagedCheckbox.disabled = false;
 
-    if (undamagedCheckbox) {
-        undamagedCheckbox.disabled = false;
-    }
+            if (allCheckbox?.checked) {
+            undamagedCheckbox.checked = true;
+            }
+        }
 
+        if (allCheckbox?.checked) {
+            syncCheckboxesFromAll();
+        } else {
+            syncAllFromSubcategories();
+        }
     }
 
     userInteracted = false;
@@ -246,33 +248,33 @@ function applyMapStructureState() {
 }
 
 function syncCheckboxesFromAll() {
-  const allEl = document.getElementById('toggleStructures');
-  const damEl = document.getElementById('toggleDamaged');
-  const undEl = document.getElementById('toggleUndamaged');
-  if (!allEl || !damEl || !undEl) return;
+    const allEl = document.getElementById('toggleStructures');
+    const damEl = document.getElementById('toggleDamaged');
+    const undEl = document.getElementById('toggleUndamaged');
+    if (!allEl || !damEl || !undEl) return;
 
-  if (!allEl.checked) {
-    damEl.checked = false;
+    if (!allEl.checked) {
+        damEl.checked = false;
 
-    if (!undEl.disabled) undEl.checked = false;
-  } else {
-    damEl.checked = true;
+        if (!undEl.disabled) undEl.checked = false;
+    } else {
+        damEl.checked = true;
 
-    if (!undEl.disabled) undEl.checked = true;
-    else undEl.checked = false; 
-  }
+        if (!undEl.disabled) undEl.checked = true;
+        else undEl.checked = false; 
+    }
 
-  applyMapStructureState();
+    applyMapStructureState();
 }
 
 function syncAllFromSubcategories() {
-  const allEl = document.getElementById('toggleStructures');
-  const damEl = document.getElementById('toggleDamaged');
-  const undEl = document.getElementById('toggleUndamaged');
-  if (!allEl || !damEl || !undEl) return;
+    const allEl = document.getElementById('toggleStructures');
+    const damEl = document.getElementById('toggleDamaged');
+    const undEl = document.getElementById('toggleUndamaged');
+    if (!allEl || !damEl || !undEl) return;
 
-  allEl.checked = undEl.disabled ? damEl.checked : (damEl.checked && undEl.checked);
-  applyMapStructureState();
+    allEl.checked = undEl.disabled ? damEl.checked : (damEl.checked && undEl.checked);
+    applyMapStructureState();
 }
 
 // Recenter 
@@ -323,11 +325,11 @@ map.on('load', async () => {
         source: 'fire-structures',
         layout: {
         'icon-image': 'rect-marker',
-        'icon-size': 0.4,
+        'icon-size': 0.5,
         'icon-allow-overlap': true
         },
         paint: {
-        'icon-opacity': 0.5,
+        'icon-opacity': 0.65,
         'icon-color': [
             'match',
             ['get', 'damage'],
@@ -346,52 +348,51 @@ map.on('load', async () => {
         'icon-halo-blur': 0
         }
     });
+    document.getElementById('toggleStructures')?.addEventListener('change', syncCheckboxesFromAll);
+    document.getElementById('toggleDamaged')?.addEventListener('change', syncAllFromSubcategories);
+    document.getElementById('toggleUndamaged')?.addEventListener('change', syncAllFromSubcategories);
+    syncAllFromSubcategories();
 
-  document.getElementById('toggleStructures')?.addEventListener('change', syncCheckboxesFromAll);
-  document.getElementById('toggleDamaged')?.addEventListener('change', syncAllFromSubcategories);
-  document.getElementById('toggleUndamaged')?.addEventListener('change', syncAllFromSubcategories);
-  syncAllFromSubcategories();
-
-  const recenterBtn = document.getElementById('recenterBtn');
-  if (recenterBtn) {
-    recenterBtn.style.display = 'none';
-    recenterBtn.addEventListener('click', recenterToCurrentFire);
-  }
-
-  map.on('dragstart', () => { userInteracted = true; });
-  map.on('zoomstart', () => { userInteracted = true; });
-  map.on('rotatestart', () => { userInteracted = true; });
-  map.on('pitchstart', () => { userInteracted = true; });
-
-  // Show button only after user moves
-  map.on('moveend', () => {
-    if (suppressNextMoveEnd) {
-      suppressNextMoveEnd = false;
-      return;
+    const recenterBtn = document.getElementById('recenterBtn');
+    if (recenterBtn) {
+        recenterBtn.style.display = 'none';
+        recenterBtn.addEventListener('click', recenterToCurrentFire);
     }
-    if (!userInteracted) return;
 
-    const btn = document.getElementById('recenterBtn');
-    if (btn) btn.style.display = 'inline-block';
-  });
+    map.on('dragstart', () => { userInteracted = true; });
+    map.on('zoomstart', () => { userInteracted = true; });
+    map.on('rotatestart', () => { userInteracted = true; });
+    map.on('pitchstart', () => { userInteracted = true; });
 
-  try {
-    await loadFire('french');
-  } catch (err) {
-    console.error('Initial load failed:', err);
-    setStatus('Initial load failed (check console)');
-  }
+    // Show button only after user moves
+    map.on('moveend', () => {
+        if (suppressNextMoveEnd) {
+        suppressNextMoveEnd = false;
+        return;
+        }
+        if (!userInteracted) return;
 
-  const fireSelectMap = document.getElementById('fireSelectMap');
-  if (fireSelectMap) {
-    fireSelectMap.value = 'french';
-    fireSelectMap.addEventListener('change', async (e) => {
-      try {
-        await loadFire(e.target.value);
-      } catch (err) {
-        console.error('Switch fire failed:', err);
-        setStatus('Switch failed (check console)');
-      }
+        const btn = document.getElementById('recenterBtn');
+        if (btn) btn.style.display = 'inline-block';
     });
-  }
+
+    try {
+        await loadFire('french');
+    } catch (err) {
+        console.error('Initial load failed:', err);
+        setStatus('Initial load failed (check console)');
+    }
+
+    const fireSelectMap = document.getElementById('fireSelectMap');
+    if (fireSelectMap) {
+        fireSelectMap.value = 'french';
+        fireSelectMap.addEventListener('change', async (e) => {
+        try {
+            await loadFire(e.target.value);
+        } catch (err) {
+            console.error('Switch fire failed:', err);
+            setStatus('Switch failed (check console)');
+        }
+        });
+    }
 });
