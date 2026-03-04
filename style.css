@@ -308,7 +308,6 @@ h4 {
     text-align: center;
     margin-bottom: 16px;
 } 
-
 /* -- Approach Flowchart */
 .pipeline-img {
     width: 100%;
@@ -424,7 +423,7 @@ body.modal-open{
 /* -- Data subsection under approach section */
 .data-list {
     margin: 6px 0 12px 0;
-    padding-left: 2px;
+    padding-left: 20px;
 }
 
 .data-list-2 {
@@ -435,6 +434,18 @@ body.modal-open{
 .data-list li {
     margin: 4px;
 }
+
+.tech-list{
+    margin: 6px 0 12px 0;
+    padding-left: 2px;
+    font-size: 0.95rem;
+}
+
+.tech-list li {
+    margin: 4px;
+    margin-left: 12px;
+}
+
 
 .subsection-content {
     margin-left: 18px;

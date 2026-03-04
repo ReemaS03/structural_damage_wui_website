@@ -215,7 +215,7 @@ function applyMapStructureState() {
 
     const allChecked = allEl.checked;
     const damagedChecked = damEl.checked;
-    const undamagedChecked = undEl.checked;
+    const undamagedChecked = undEl.disabled ? false : undEl.checked;
 
     const showLayer = allChecked || damagedChecked || undamagedChecked;
 

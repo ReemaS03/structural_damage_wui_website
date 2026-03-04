@@ -298,7 +298,7 @@
         <summary>View additional technical preprocessing details</summary>
         <div class="expand-content">
           <p><strong>Key preprocessing steps included:</strong></p>
-          <ul class="data-list">
+          <ul class="tech-list">
             <li>Filtering to 30 California wildfires.</li>
             <li>Reprojecting coordinates to EPSG:5070 for spatial consistency.</li>
             <li>Applying spatial joins with 30-meter buffers.</li>
@@ -347,7 +347,7 @@
         <details class="expandable">
           <summary>View additional Random Forest technical details</summary>
           <div class="expand-content">
-            <ul class="data-list">
+            <ul class="tech-list">
               <li><strong>Cross-validation:</strong> 3-fold GroupKFold (grouped by wildfire)</li>
               <li><strong>Search method:</strong> RandomSearchCV with 20 sampled configurations</li>
               <li><strong>Class weight:</strong> balanced</li>
@@ -379,7 +379,7 @@
         <details class="expandable">
         <summary>View additional Neural Network technical details</summary>
         <div class="expand-content">
-          <ul class="data-list">
+          <ul class="tech-list">
             <li><strong>Cross-validation:</strong> 5-fold cross-validation on combined training + validation sets</li>
             <li><strong>Search method:</strong> Grid search over architecture and regularization parameters</li>
             <li><strong>Architecture (units per layer):</strong> [128, 64, 32, 16, 8]</li>
