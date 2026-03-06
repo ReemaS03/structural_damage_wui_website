@@ -321,12 +321,12 @@ h4 {
 }
 
 .pipeline-caption {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 6px;
-  margin-bottom: 20px;
-  font-style: italic;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    font-style: italic;
 }
 
 .image-container {
@@ -559,7 +559,7 @@ body.modal-open{
     margin-top: 12px;
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 14px;
+    padding: 6px 14px;
     background: var(--surface);
 }
 
@@ -607,6 +607,34 @@ body.modal-open{
 
 .demo-metrics div{ 
     text-align: left; 
+}
+
+#shapDemo .demo-image img{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.shap-explanation{
+    margin-left: 12px;
+}
+
+#shapDemo .demo-text ul {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 18px;
+}
+
+#shapDemo .demo-text ul ul {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#shapDemo .demo-text li {
+    margin-bottom: 2px;
+}
+
+#shap-help {
+    margin-bottom: 10px;
 }
 
 @media (max-width: 600px){
@@ -831,9 +859,11 @@ body.modal-open{
     gap: 8px;
     font-weight: 500;      
 }
+
 .map-note{
     white-space: pre-line;
 }
+
 .map-note{
     font-size: 0.9rem;
     opacity: 0.75;

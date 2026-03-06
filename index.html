@@ -597,14 +597,79 @@
 
       <hr class="section-divider">
 
-      <h3>Feature Importance *WIP</h3>
-      <p class="results-text">
+      <h3>Feature Importance</h3>
+      <p class="demo-intro">
       Feature importance analysis using SHAP values reveals which structural and environmental factors most strongly influence predicted wildfire damage risk.
       </p>
-      <p class="results-text">
-        Visualizations and interpretations will be added.
+      <details class="expandable" id="shap-help">
+        <summary>How to read a SHAP summary plot</summary>
+        <ul>
+          <li>Each dot represents one structure.</li>
+          <li>The x-axis shows the SHAP value, indicating how much that feature pushes the prediction toward damage or no damage.</li>
+          <li>Points to the right (positive SHAP values) increase predicted damage risk, while points to the left (negative SHAP values) decrease it.</li>
+          <li>Color indicates the feature value (red = high, blue = low). For categorical variables, red indicates the presence of that feature while blue indicates its absence.</li>
+          <li>Features are ordered from most to least influential, top to bottom.</li>
+        </ul>
+      </details>
+      <p class="demo-intro">
+        The SHAP summary plots below show how feature importance changes across different subsets of fires.
       </p>
+      <p class="demo-intro">
+        Select a fire subset and model to explore how these importance patterns vary across fire subsets and between the two models.
+      </p>
+      <p><strong> WIP Note:</strong> the demo text section is only filled for selected combinations, "Test Set - Random Forest" and "Small Fires - Random". The rest will follow the same format and be updated soon.</p>
+      <div class="demo-card" id="shapDemo">
+        <!-- Row 1: dropdowns -->
+        <div class="demo-controls">
+          <label class="demo-field">
+            <span>Fire Subset</span>
+            <select id="subsetSelect" class="demo-select">
+              <option value="" selected>Select a fire subset...</option>
+              <option value="test_set">Test Set</option>
+              <option value="small">Small Fires</option>
+              <option value="low_severity">Low Severity</option>
+              <option value="high_severity">High Severity</option>
+              <option value="wind_driven">Wind Driven</option>
+              <option value="plume_driven">Plume Driven</option>
+            </select>
+          </label>
 
+          <label class="demo-field">
+            <span>Model</span>
+            <select id="shapModelSelect" class="demo-select">
+              <option value="" selected>Select a model...</option>
+              <option value="rf">Random Forest</option>
+              <option value="nn">Neural Network</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Row 2: image OR empty -->
+        <div class="demo-visual">
+          <div id="shapEmpty" class="demo-empty">
+            Choose a fire subset + model to view the SHAP plot.
+          </div>
+
+          <div id="shapImageWrap" class="image-container demo-image" style="display:none;">
+            <img id="shapImage" src="" alt="Selected fire subset/model SHAP plot">
+            <button type="button" class="expand-btn"
+                    aria-label="Expand image"
+                    onclick="openModal(document.getElementById('shapImage'))">⤢</button>
+          </div>
+        </div>
+
+        <!-- Row 3: text -->
+        <div id="shapText" class="demo-text" style="display:none;">
+          <div class="demo-meta-row">
+            <div class="demo-meta"><strong>Fire Subset:</strong><span id="shapSubsetName"></span></div>
+            <div class="demo-meta"><strong>Model:</strong><span id="shapModelName"></span></div>
+          </div>
+
+          <div class="shap-explanation">
+            <p id="shapExplanation"></p>
+          </div>
+        </div>
+      </div>
       <hr class="section-divider">
 
       <h3>Key Insights</h3>
@@ -642,7 +707,7 @@
     <!-- Conclusion section -->
     <section class="card" id="conclusion">
       <h2>Conclusion</h2>
-      <p>To be added</p>
+      <p><strong>WIP Note:</strong> Conclusion to be added.</p>
     </section>
 
 
@@ -650,7 +715,7 @@
     <section class="card" id="links">
       <h2>Links</h2>
       <p class="section-description">For more details on our project, check out our report, poster, and code repositories:</p>
-      <p class="section-description"><strong>Note:</strong> Report and Poster are not available yet.</p>
+      <p class="section-description"><strong>WIP Note:</strong> Report and Poster are not available yet.</p>
       <div class="links-row">
         <a class="btn" href="project-report.pdf" target="_blank">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon lucide lucide-notebook-text-icon lucide-notebook-text"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9.5 8h5"/><path d="M9.5 12H16"/><path d="M9.5 16H14"/></svg>

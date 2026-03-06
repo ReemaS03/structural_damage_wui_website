@@ -196,3 +196,189 @@ if (fireSelect && modelSelect) {
   modelSelect.addEventListener("change", updateDemo);
   updateDemo();
 }
+
+// Fire Subset x Model SHAP Demo
+const subsetSelect = document.getElementById("subsetSelect");
+const shapModelSelect = document.getElementById("shapModelSelect");
+
+const shapEmpty = document.getElementById("shapEmpty");
+const shapImageWrap = document.getElementById("shapImageWrap");
+const shapImage = document.getElementById("shapImage");
+const shapText = document.getElementById("shapText");
+
+const shapSubsetName = document.getElementById("shapSubsetName");
+const shapModelName = document.getElementById("shapModelName");
+const shapExplanation = document.getElementById("shapExplanation");
+
+const SUBSET_INFO = {
+  rf: {
+    test_set: {
+      subsetName: "Test Set",
+      explanation: `
+        <ul>
+          <li>
+            Structural characteristics such as exterior wall materials, roof type, and eave design strongly influence predictions.
+            <ul>
+              <li>Structures with flammable outer walls increase predicted damage risk.</li>
+              <li>Open or enclosed eaves are associated with lower predicted damage.</li>
+            </ul>
+          </li>
+          <li>
+            Environmental factors such as burn severity class and weather conditions also affect predictions.
+            <ul>
+              <li>Higher burn severity is associated with increased predicted destruction risk.</li>
+            </ul>
+          </li>
+        </ul>
+      `
+    },
+
+    small: {
+      subsetName: "Small Fires",
+      explanation: `
+        <ul>
+          <li>
+            Environmental conditions play a major role in predictions for smaller fires, with precipitation and burn severity among the most influential features.
+            <ul>
+              <li>Higher precipitation is associated with lower predicted damage risk.</li>
+              <li>Higher burn severity increases predicted destruction risk.</li>
+            </ul>
+          </li>
+          <li>
+            Structural characteristics still influence outcomes, though they are less dominant than in the full test set.
+            <ul>
+              <li>Open eaves are associated with lower predicted damage.</li>
+              <li>Structures with single-pane windows tend to show higher predicted vulnerability.</li>
+            </ul>
+          </li>
+        </ul>
+      `
+    },
+
+    low_severity: {
+      subsetName: "Low Severity",
+      explanation: `
+        <p>RF low severity explanation to be added.</p>
+      `
+    },
+
+    high_severity: {
+      subsetName: "High Severity",
+      explanation: `
+        <p>RF high severity explanation to be added.</p>
+      `
+    },
+
+    wind_driven: {
+      subsetName: "Wind Driven",
+      explanation: `
+        <p>RF wind-driven explanation to be added.</p>
+      `
+    },
+
+    plume_driven: {
+      subsetName: "Plume Driven",
+      explanation: `
+        <p>RF plume-driven explanation to be added.</p>
+      `
+    }
+  },
+
+  nn: {
+    test_set: {
+      subsetName: "Test Set",
+      explanation: `
+        <p>NN test set explanation to be added.</p>
+      `
+    },
+
+    small: {
+      subsetName: "Small Fires",
+      explanation: `
+        <p>NN small fires explanation to be added.</p>
+      `
+    },
+
+    low_severity: {
+      subsetName: "Low Severity",
+      explanation: `
+        <p>NN low severity explanation to be added.</p>
+      `
+    },
+
+    high_severity: {
+      subsetName: "High Severity",
+      explanation: `
+        <p>NN high severity explanation to be added.</p>
+      `
+    },
+
+    wind_driven: {
+      subsetName: "Wind Driven",
+      explanation: `
+        <p>NN wind-driven explanation to be added.</p>
+      `
+    },
+
+    plume_driven: {
+      subsetName: "Plume Driven",
+      explanation: `
+        <p>NN plume-driven explanation to be added.</p>
+      `
+    }
+  }
+};
+
+function shapModelFolder(model) {
+  return model === "rf" ? "random_forest" : "neural_network";
+}
+
+function shapModelLabel(model) {
+  return model === "rf" ? "Random Forest" : "Neural Network";
+}
+
+function shapImgPath(model, subset) {
+  return `images/demo/${shapModelFolder(model)}/${subset}_shap.png`;
+}
+
+function updateShapDemo() {
+  if (!subsetSelect || !shapModelSelect) return;
+
+  const subset = subsetSelect.value;
+  const model = shapModelSelect.value;
+
+  if (!subset || !model) {
+    shapEmpty.textContent = "Choose a fire subset + model to view the SHAP plot.";
+    shapEmpty.style.display = "block";
+    shapImageWrap.style.display = "none";
+    shapText.style.display = "none";
+    return;
+  }
+
+  const info = SUBSET_INFO[model]?.[subset];
+
+  if (!info) {
+    shapEmpty.textContent = "This fire subset/model pair isn't available in the demo yet.";
+    shapEmpty.style.display = "block";
+    shapImageWrap.style.display = "none";
+    shapText.style.display = "none";
+    return;
+  }
+
+  shapImage.src = shapImgPath(model, subset);
+  shapImage.alt = `${info.subsetName} - ${shapModelLabel(model)} SHAP plot`;
+
+  shapSubsetName.textContent = info.subsetName;
+  shapModelName.textContent = shapModelLabel(model);
+  shapExplanation.innerHTML = info.explanation;
+
+  shapEmpty.style.display = "none";
+  shapImageWrap.style.display = "block";
+  shapText.style.display = "block";
+}
+
+if (subsetSelect && shapModelSelect) {
+  subsetSelect.addEventListener("change", updateShapDemo);
+  shapModelSelect.addEventListener("change", updateShapDemo);
+  updateShapDemo();
+}
