@@ -72,7 +72,7 @@
             Despite growing wildfire risk, publicly accessible tools that assess damage at the
             <strong>individual structure level</strong> remain limited.
           </p>
-           <hr class="section-divider overview-divider">
+          <hr class="section-divider overview-divider">
         </div>
 
         <figure class="overview-visual">
@@ -87,7 +87,7 @@
           </div>
 
           <figcaption class="overview-caption">
-            Observed structure outcomes in the North Complex Fire (red = destroyed, blue = undamaged).
+            Observed structure outcomes in the North Complex Fire<br>(red = destroyed, blue = undamaged).
           </figcaption>
 
         </figure>
@@ -123,8 +123,8 @@
     <section id="demo">
       <h2>Structure-Level Damage Map</h2>
       <p class="section-description">
-        This map shows actual structural damage for two fires. <br>
-        Use the controls to explore spatial patterns of damaged and undamaged structures.
+        This map shows observed structure outcomes from the <strong>CAL FIRE Damage Inspection (DINS)</strong> dataset for two fires. <br>
+        Use the controls to explore spatial patterns among surveyed structures within each fire perimeter.
       </p>
       <!-- <p class="section-description"><strong>Note:</strong> For now, this only shows actual damage. Might add another layer later, such as side-by-side prediction vs actual with a sliding bar in the middle</p> -->
       <div class="demo-field-map">
@@ -164,7 +164,7 @@
       <h2>Our Approach</h2>
       <p class="approach-intro">
         To understand why some homes are destroyed while others survive, we combine multiple public datasets that describe wildfire severity, environmental conditions, and structural characteristics. 
-        We transform these data into structure-level features and train machine learning models to predict damage outcomes.
+        We transform these sources into structure-level features and train machine learning models to predict whether a residential structure is destroyed or experiences no damage.
       </p>
       <div class="image-container">
         <img 
@@ -176,7 +176,7 @@
       </div>
 
       <p class="pipeline-caption">
-        Flowchart showcasing high-level overview of how multi-source data is merged and engineered to generate structure-level wildfire damage predictions.
+        Flowchart showing a high-level overview of how multiple data sources are merged and engineered to generate structure-level wildfire damage predictions.
       </p>
 
       <hr class="section-divider">
@@ -187,7 +187,7 @@
         <p>
           Our prediction target is a binary structure damage outcome derived from 
           <strong>CAL FIRE Damage Inspection (DINS)</strong> reports. 
-          We retain only residential structures classified as 
+          We retain only residential structures from our selected wildfires that were classified as 
           <strong>Destroyed (&gt;50%)</strong> or <strong>No Damage</strong> 
           to focus on clearly defined damage states.
         </p>
@@ -218,7 +218,7 @@
         </ul>
 
         <p>
-          These datasets were integrated into a unified fire severity dataset during our Q1 project.
+          These datasets were integrated into a unified pixel-level fire severity dataset during our Q1 project.
         </p>
 
         <details class="expandable">
@@ -234,10 +234,10 @@
         </details>
       </div>
 
-      <h4>Spatial Perimeters</h4>
+      <h4>Spatial Context</h4>
       <div class="subsection-content">
         <p>
-          To capture the spatial context of structures within WUI areas, we incorporate:
+          To identify structures located within wildfire-prone Wildland-Urban Interface (WUI) areas, we incorporate:
         </p>
         <ul class="data-list">
           <li><strong>SILVIS Labs WUI dataset</strong> — Wildland-Urban Interface classifications and perimeters</li>
@@ -258,7 +258,7 @@
           We filtered the DINS dataset to include only residential structures classified as
           <strong>Destroyed (&gt;50%)</strong> or <strong>No Damage</strong>.
           Column names were standardized, invalid entries were converted to missing values,
-          and columns with excessive missingness were removed.
+          and columns with more than 70% missingness were removed.
         </p>
         <p>
           All datasets were reprojected into a consistent coordinate system
@@ -276,7 +276,7 @@
         <p>
           Structures were spatially joined to fire severity data using a
           <strong>30-meter buffer</strong> to capture localized burn conditions.
-          Additional building characteristics were incorporated using
+          Additional building characteristics were added using
           nearest-neighbor spatial matching with the NSI dataset.
         </p>
       </div>
@@ -289,7 +289,7 @@
           one-hot encoded.
         </p>
         <p>
-          Structural and environmental variables were combined into a unified dataset,
+          Structural and environmental variables were combined into a unified <strong>structure-level dataset</strong>,
           and the damage outcome was encoded as a <strong>binary target variable (1 for Destroyed, 0 for No Damage).</strong>
         </p>
       </div>
@@ -302,7 +302,7 @@
             <li>Filtering to 30 California wildfires.</li>
             <li>Reprojecting coordinates to EPSG:5070 for spatial consistency.</li>
             <li>Applying spatial joins with 30-meter buffers.</li>
-            <li>Nearest-neighbor matching (1500m threshold) to integrate NSI data and remove duplicates.</li>
+            <li>Using nearest-neighbor matching (1500m threshold) to integrate NSI data, then removing duplicate matches.</li>            
             <li>Removing columns with all false values after one-hot encoding.</li>
             <li>Imputing missing categorical values as "Unknown".</li>
             <li>Binary target encoding (1 = Destroyed, 0 = No Damage).</li>
@@ -315,11 +315,25 @@
       <h3>Structural Damage Model</h3>
       <p>
         We trained two models, <strong>Random Forest</strong> and <strong>Neural Network</strong>, to predict whether a residential structure would be <strong>Destroyed (&gt;50%)</strong> or experience <strong>No Damage</strong> during a wildfire.
-        Using two different modeling approaches allows us to compare performance and identify key predictive features across methods.
-      </p>
-
+        Using two different modeling approaches allows us to compare model performance and identify key predictive features across methods.      </p>
       <p>
-        All cross-validation was grouped at the <strong>wildfire level</strong> to prevent data leakage between training and validation folds.
+        To test whether wildfire characteristics affect model performance, we trained both <strong>Random Forest</strong> and <strong>Neural Network</strong> models on six different subsets of the data, using the same general training, tuning, and threshold-optimization pipeline for each subset.
+      </p>
+      <ul class="data-list">
+        <li><strong>All fires</strong></li>
+        <li><strong>Small fires</strong> — fewer structure records</li>
+        <li><strong>Wind-driven</strong> vs <strong>plume-driven</strong> fires</li>
+        <li><strong>Low severity</strong> vs <strong>high severity</strong> fires — based on MTBS burn severity classification</li>
+        <ul class="nested-list">
+          <li><strong>Low severity:</strong> fewer than 33% of pixels fall into MTBS severity classes 3-4</li>
+          <li><strong>High severity:</strong> more than 33% of pixels fall into MTBS severity classes 3-4</li>
+        </ul>
+      </ul>
+      <p>
+        To prevent overfitting on the dataset and increase the interpretability of the model, multicollinear features were removed, and feature selection was run using the top 95% cumulative importance on a LightGBM for each model training set.
+      </p>
+      <p>
+        To reduce data leakage, we split the data at the <strong>wildfire level</strong>, meaning all structures from a single wildfire are kept within a single training, validation, or test set.
       </p>
 
       <h4>Random Forest Model</h4>
@@ -333,23 +347,12 @@
         <p>
           After selecting the best performing model, we performed threshold tuning on the validation set to find the threshold that would maximize the validation F1 score.
         </p>
-
-        <p>
-          To test whether wildfire characteristics affect model performance, we also trained Random Forest models on
-          six fire subsets (using the same training, tuning, and threshold optimization pipeline).
-        </p>
-        <ul class="data-list">
-          <li><strong>All fires</strong></li>
-          <li><strong>Small fires</strong> (fewer structure records)</li>
-          <li><strong>Wind-driven</strong> vs <strong>plume-driven</strong> fires</li>
-          <li><strong>Low severity</strong> vs <strong>high severity</strong> fires (based on MTBS burn severity classification)</li>
-        </ul>
         <details class="expandable">
           <summary>View additional Random Forest technical details</summary>
           <div class="expand-content">
             <ul class="tech-list">
               <li><strong>Cross-validation:</strong> 3-fold GroupKFold (grouped by wildfire)</li>
-              <li><strong>Search method:</strong> RandomSearchCV with 20 sampled configurations</li>
+              <li><strong>Search method:</strong> RandomizedSearchCV with 20 sampled configurations</li>
               <li><strong>Class weight:</strong> balanced</li>
               <li><strong>n_estimators:</strong> {300, 500, 800}</li>
               <li><strong>max_depth:</strong> {20, 40, 60, None}</li>
@@ -357,9 +360,6 @@
               <li><strong>min_samples_leaf:</strong> {1, 2, 5}</li>
               <li><strong>max_features:</strong> {"sqrt", 0.3, 0.5}</li>
               <li><strong>Threshold tuning range:</strong> 0.2 - 0.8</li>
-              <li><strong>Subset analysis:</strong> trained 6 RF variants (all, small, wind-driven, plume-driven, low severity, high severity)</li>
-              <li><strong>Severity split:</strong> low/high defined by whether &lt;33% / &gt;33% of pixels are MTBS severity 3–4</li>
-              <li><strong>Pipeline:</strong> same tuning + threshold optimization + feature selection for each subset</li>
             </ul>
           </div>
         </details>
@@ -386,8 +386,8 @@
             <li><strong>Activation:</strong> ReLU</li>
             <li><strong>Dropout rate:</strong> 0.15</li>
             <li><strong>Batch normalization:</strong> Enabled</li>
-            <li><strong>Learning rate:</strong> 0.01</li>
-            <li><strong>L2 regularization:</strong> 0.001</li>
+            <li><strong>Learning rate:</strong> 0.001</li>
+            <li><strong>L2 regularization:</strong> 0.01</li>
             <li><strong>Early stopping:</strong> 15-epoch patience (best validation epoch selected)</li>
           </ul>
         </div>
@@ -403,11 +403,9 @@
           Final model performance was evaluated using <strong>Accuracy, Precision, Recall, and F1-score</strong>.
         </p>
       </div>
-
       <p>
         Using the final trained models, we generated:
       </p>
-
       <ul class="data-list-2">
         <li>Model performance metrics and confusion matrices</li>
         <li>Feature importance analysis using SHAP</li>
@@ -420,8 +418,115 @@
     <!-- Results section -->
     <section class="card" id="results">
       <h2>Results</h2>
-      <p>To be added (including visualizations, performance metrics, and feature importance analysis)</p>
+      <h3>Overall Model Performance</h3>
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Class</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1</th>
+            <th>Support</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="model-row">
+            <td rowspan="5"><strong>Random Forest</strong></td>
+            <td>No Damage</td>
+            <td>0.642</td>
+            <td>0.888</td>
+            <td>0.745</td>
+            <td>303</td>
+          </tr>
+          <tr>
+            <td>Destroyed</td>
+            <td>0.974</td>
+            <td>0.893</td>
+            <td>0.932</td>
+            <td>1402</td>
+          </tr>
+          <tr>
+            <td>Macro avg</td>
+            <td>0.808</td>
+            <td>0.890</td>
+            <td>0.838</td>
+            <td>1705</td>
+          </tr>
+          <tr>
+            <td>Weighted avg</td>
+            <td>0.915</td>
+            <td>0.892</td>
+            <td><strong>0.898</strong></td>
+            <td>1705</td>
+          </tr>
+          <tr class="accuracy-row">
+            <td><em>Accuracy</em></td>
+            <td colspan="5" class="accuracy-value"><strong>89.2%</strong></td>
+          </tr>
+          <tr class="divider-row"><td colspan="6"></td></tr>
+
+          <tr class="model-row">
+            <td rowspan="5"><strong>Neural Network</strong></td>
+            <td>No Damage</td>
+            <td>0.824</td>
+            <td>0.508</td>
+            <td>0.629</td>
+            <td>303</td>
+          </tr>
+          <tr>
+            <td>Destroyed</td>
+            <td>0.902</td>
+            <td>0.976</td>
+            <td>0.938</td>
+            <td>1402</td>
+          </tr>
+          <tr>
+            <td>Macro avg</td>
+            <td>0.863</td>
+            <td>0.742</td>
+            <td>0.783</td>
+            <td>1705</td>
+          </tr>
+          <tr>
+            <td>Weighted avg</td>
+            <td>0.888</td>
+            <td>0.893</td>
+            <td><strong>0.883</strong></td>
+            <td>1705</td>
+          </tr>
+          <tr class="accuracy-row">
+            <td><em>Accuracy</em></td>
+            <td colspan="5" class="accuracy-value"><strong>89.3%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p class="results-text">
+        Both models achieve similar overall performance on the wildfire test set, with
+        accuracy near 89%. However, the models differ in how they identify damage.
+      </p>
+      <ul class="results-list">
+        <li>The Random Forest has higher recall for <strong>No Damage</strong> structures (0.888 vs. 0.508), meaning it is better at recognizing homes that survive a fire.</li>
+        <li>The Neural Network has higher recall for <strong>Destroyed</strong> structures (0.976 vs. 0.893), making it more effective at identifying homes likely to be lost during a wildfire.</li>
+      </ul>
+      <p class="results-text">
+        In practice, this means the Random Forest tends to identify surviving structures
+        more reliably, while the Neural Network is stronger at detecting high-risk
+        structures likely to be destroyed. 
+      </p>
+      <p class="results-text">
+        Depending on the use case, this trade-off may matter: a homeowner focused on identifying high-risk homes might prefer the
+        Neural Network, while planners focused on identifying surviving structures may benefit more from the Random Forest.
+      </p>
+      
+      <hr class="section-divider">
+
       <h3>Fire x Model Demo</h3>
+      <p class="demo-intro">
+        While the table above summarizes overall test-set performance, the demo below shows how predictions vary across individual wildfire events.
+      </p>
       <p class="demo-intro">
         Select a fire and model to view the corresponding damage maps (actual, predicted, probability)
       </p>
@@ -490,14 +595,53 @@
         </div>
       </div>
 
+      <hr class="section-divider">
 
-      <h3>Interpretation & Discussion</h3>
-      <p>To be added</p>
+      <h3>Feature Importance *WIP</h3>
+      <p class="results-text">
+      Feature importance analysis using SHAP values reveals which structural and environmental factors most strongly influence predicted wildfire damage risk.
+      </p>
+      <p class="results-text">
+        Visualizations and interpretations will be added.
+      </p>
+
+      <hr class="section-divider">
+
+      <h3>Key Insights</h3>
+      <ul class="results-list">
+        <li>
+          <strong>Structural characteristics strongly influence wildfire damage.</strong>
+          Features such as exterior wall materials, roof type, and eave design were
+          among the most important predictors of whether a structure was destroyed.
+        </li>
+        <li>
+          <strong>Environmental conditions also play an important role.</strong>
+          Burn severity, temperature, precipitation, and other environmental
+          variables contribute to overall wildfire damage risk for structures.
+        </li>
+        <li>
+          <strong>Model choice affects how damage risk is identified.</strong>
+          The Random Forest more reliably identifies structures that survive fires,
+          while the Neural Network more strongly identifies structures likely to be
+          destroyed.
+        </li>
+        <li>
+          <strong>Structure-level modeling provides valuable insights into wildfire damage.</strong>
+          Modeling damage at the structure level allows the analysis to capture both
+          building characteristics and environmental conditions that influence
+          wildfire outcomes in the Wildland-Urban Interface.
+        </li>
+        <li>
+          <strong>Predictive models can support wildfire planning and mitigation.</strong>
+          These models can help identify vulnerable structures and provide actionable insights
+          to support risk assessment, preparedness planning, insurance evaluation, and mitigation strategies.
+        </li>
+      </ul>
     </section>
 
     <!-- Conclusion section -->
     <section class="card" id="conclusion">
-      <h2>Conclusion (*WIP)</h2>
+      <h2>Conclusion</h2>
       <p>To be added</p>
     </section>
 

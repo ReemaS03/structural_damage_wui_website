@@ -109,23 +109,23 @@ const FIRE_INFO = {
 
 // Overall test set metrics (same for all fires)
 const OVERALL_TEST_METRICS = {
-  rf: { f1Und: "0.696", f1Des: "0.908", f1W: "0.871", acc: "0.859" },
-  nn: { f1Und: "0.619",   f1Des: "0.928",   f1W: "0.873",   acc: "0.879" }
+  rf: { f1Und: "0.745", f1Des: "0.932", f1W: "0.898", acc: "0.892" },
+  nn: { f1Und: "0.629",   f1Des: "0.938",   f1W: "0.883",   acc: "0.893" }
 };
 
 // Per-fire metrics for each model 
 const FIRE_METRICS = {
   rf: {
-    french:   { f1Und: "0.940", f1Des: "0.531", f1W: "0.904", acc: "0.894" },
-    mosquito: { f1Und: "0.900", f1Des: "0.764", f1W: "0.860", acc: "0.860" },
-    erskine:  { f1Und: "0.0", f1Des: "0.978", f1W: "0.978", acc: "0.958" },
-    carr:     { f1Und: "0.0", f1Des: "0.905", f1W: "0.905", acc: "0.826" }
+    french:   { f1Und: "0.928", f1Des: "0.490", f1W: "0.890", acc: "0.875" },
+    mosquito: { f1Und: "0.894", f1Des: "0.760", f1W: "0.855", acc: "0.853" },
+    erskine:  { f1Und: "0.0", f1Des: "0.991", f1W: "0.991", acc: "0.982" },
+    carr:     { f1Und: "0.0", f1Des: "0.934", f1W: "0.934", acc: "0.876" }
   },
   nn: {
-    french:   { f1Und: "0.744", f1Des: "0.296", f1W: "0.705", acc: "0.625" },
-    mosquito: { f1Und: "0.633", f1Des: "0.592", f1W: "0.620", acc: "0.613" },
+    french:   { f1Und: "0.771", f1Des: "0.314", f1W: "0.731", acc: "0.657" },
+    mosquito: { f1Und: "0.423", f1Des: "0.515", f1W: "0.450", acc: "0.473" },
     erskine:  { f1Und: "0.0", f1Des: "1.0", f1W: "1.0", acc: "1.0" },
-    carr:     { f1Und: "0.0", f1Des: "0.967", f1W: "0.967", acc: "0.936" }
+    carr:     { f1Und: "0.0", f1Des: "0.986", f1W: "0.986", acc: "0.972" }
   }
 };
 

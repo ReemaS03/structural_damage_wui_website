@@ -165,7 +165,7 @@ async function loadFire(key) {
 
     if (!hasUndamaged) {
         if (note) {
-            note.textContent = "Note: No undamaged structures are recorded for this fire.";
+            note.textContent = "Note: In the DINS dataset for this fire, none of the surveyed structures were classified as undamaged.\nHowever, this does not mean that no undamaged structures existed within the fire perimeter.";
         }
 
         if (undamagedCheckbox) {
@@ -310,12 +310,22 @@ map.on('load', async () => {
     });
 
     map.addLayer({
+        id: 'fire-perimeter-fill',
+        type: 'fill',
+        source: 'fire-perimeter',
+        paint: {
+            'fill-color': '#f4b516',
+            'fill-opacity': 0.2
+        }
+    });
+
+    map.addLayer({
         id: 'fire-perimeter-outline',
         type: 'line',
         source: 'fire-perimeter',
         paint: {
-        'line-color': '#000000',
-        'line-width': 3
+            'line-color': '#000000',
+            'line-width': 2.5
         }
     });
 
