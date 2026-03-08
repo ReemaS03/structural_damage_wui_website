@@ -550,6 +550,25 @@ body.modal-open{
     opacity: 0.75;
 }
 
+.demo-metrics-title-wide {
+    font-weight: 800;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+.demo-compare input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.demo-compare:has(input:disabled) {
+    opacity: 0.7;
+}
+
 .demo-image{
     border: 1px solid var(--border);
     background: #fff;
@@ -607,6 +626,57 @@ body.modal-open{
 
 .demo-metrics div{ 
     text-align: left; 
+}
+
+.demo-compare{
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    background: #fff;
+    border: 1px solid rgba(var(--accent-rgb), 0.18);
+    border-radius: 12px;
+    padding: 10px 12px;
+}
+
+.demo-compare input[type="checkbox"]{
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.compare-image-block{
+    margin-top: 14px;
+}
+
+.compare-image-label{
+    font-weight: 800;
+    text-align: center;
+    margin: 4px 0 8px;
+    font-size: 1rem;
+}
+
+.demo-metrics-wide{
+    margin-top: 12px;
+}
+
+.overall-compare-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 18px;
+    margin-top: 8px;
+}
+
+.overall-model-title{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 600px){
+    .overall-compare-grid{
+        grid-template-columns: 1fr;
+    }
 }
 
 #shapDemo .demo-image img{
@@ -902,6 +972,9 @@ body.modal-open{
     margin: 25px 0;
     font-size: 0.95rem;
     border-bottom: 2px solid #ddd;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .results-table th {

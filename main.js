@@ -100,6 +100,43 @@ const demoOverallF1Des = document.getElementById("demoOverallF1Des");
 const demoOverallF1W   = document.getElementById("demoOverallF1W");
 const demoOverallAcc   = document.getElementById("demoOverallAcc");
 
+const compareToggle = document.getElementById("compareToggle");
+const compareLabel = document.getElementById("compareLabel");
+
+const demoSingleWrap = document.getElementById("demoSingleWrap");
+const demoCompareWrap = document.getElementById("demoCompareWrap");
+
+const comparePrimaryLabel = document.getElementById("comparePrimaryLabel");
+const compareSecondaryLabel = document.getElementById("compareSecondaryLabel");
+const comparePrimaryImage = document.getElementById("comparePrimaryImage");
+const compareSecondaryImage = document.getElementById("compareSecondaryImage");
+
+const demoModeLabel = document.getElementById("demoModeLabel");
+const demoSingleMetrics = document.getElementById("demoSingleMetrics");
+const demoCompareMetrics = document.getElementById("demoCompareMetrics");
+
+const compareFireTitle1 = document.getElementById("compareFireTitle1");
+const compareFireTitle2 = document.getElementById("compareFireTitle2");
+const compareFireF1Und1 = document.getElementById("compareFireF1Und1");
+const compareFireF1Des1 = document.getElementById("compareFireF1Des1");
+const compareFireF1W1 = document.getElementById("compareFireF1W1");
+const compareFireAcc1 = document.getElementById("compareFireAcc1");
+const compareFireF1Und2 = document.getElementById("compareFireF1Und2");
+const compareFireF1Des2 = document.getElementById("compareFireF1Des2");
+const compareFireF1W2 = document.getElementById("compareFireF1W2");
+const compareFireAcc2 = document.getElementById("compareFireAcc2");
+
+const compareOverallTitle1 = document.getElementById("compareOverallTitle1");
+const compareOverallTitle2 = document.getElementById("compareOverallTitle2");
+const compareOverallF1Und1 = document.getElementById("compareOverallF1Und1");
+const compareOverallF1Des1 = document.getElementById("compareOverallF1Des1");
+const compareOverallF1W1 = document.getElementById("compareOverallF1W1");
+const compareOverallAcc1 = document.getElementById("compareOverallAcc1");
+const compareOverallF1Und2 = document.getElementById("compareOverallF1Und2");
+const compareOverallF1Des2 = document.getElementById("compareOverallF1Des2");
+const compareOverallF1W2 = document.getElementById("compareOverallF1W2");
+const compareOverallAcc2 = document.getElementById("compareOverallAcc2");
+
 const FIRE_INFO = {
   french:   { fireName: "French"},
   mosquito:{ fireName: "Mosquito"},
@@ -137,63 +174,141 @@ function modelLabel(model) {
   return model === "rf" ? "Random Forest" : "Neural Network";
 }
 
+function otherModel(model) {
+  return model === "rf" ? "nn" : "rf";
+}
+
 function imgPath(model, fire) {
   return `images/demo/${modelFolder(model)}/${fire}_map.png`;
 }
 
-// Update demo when dropdowns change
 function updateDemo() {
   if (!fireSelect || !modelSelect) return;
 
-  const fire = fireSelect.value;   
-  const model = modelSelect.value; 
+  const fire = fireSelect.value;
+  const model = modelSelect.value;
 
   if (!fire || !model) {
     demoEmpty.textContent = "Choose a fire + model to view maps.";
     demoEmpty.style.display = "block";
-    demoImageWrap.style.display = "none";
+    demoSingleWrap.style.display = "none";
+    demoCompareWrap.style.display = "none";
     demoText.style.display = "none";
+
+    if (compareToggle) {
+      compareToggle.checked = false;
+      compareToggle.disabled = true;
+    }
+
+    if (compareLabel) {
+      compareLabel.textContent = "Compare with the other model for this selected fire";
+    }
+
     return;
   }
+
+  if (compareToggle) {
+    compareToggle.disabled = false;
+  }
+
+  const compareOn = compareToggle?.checked;
+  const compareModel = otherModel(model);
 
   const info = FIRE_INFO[fire];
-  const fireMetrics = FIRE_METRICS?.[model]?.[fire];
-  const overall = OVERALL_TEST_METRICS?.[model];
+  const fireMetrics = FIRE_METRICS[model][fire];
+  const overall = OVERALL_TEST_METRICS[model];
 
-  if (!info || !fireMetrics || !overall) {
-    demoEmpty.textContent = "This fire/model pair isn't available in the demo yet.";
-    demoEmpty.style.display = "block";
-    demoImageWrap.style.display = "none";
-    demoText.style.display = "none";
+  const fireMetrics2 = FIRE_METRICS[compareModel][fire];
+  const overall2 = OVERALL_TEST_METRICS[compareModel];
+
+  if (compareLabel) {
+    compareLabel.textContent = `Compare with ${modelLabel(compareModel)} for this selected fire`;
+  }
+
+  demoFireName.textContent = info.fireName;
+
+  if (!compareOn) {
+    demoModeLabel.textContent = "Model:";
+    demoModelName.textContent = modelLabel(model);
+
+    demoImage.src = imgPath(model, fire);
+    demoImage.alt = `${info.fireName} - ${modelLabel(model)} maps`;
+
+    demoFireF1Und.textContent = fireMetrics.f1Und;
+    demoFireF1Des.textContent = fireMetrics.f1Des;
+    demoFireF1W.textContent = fireMetrics.f1W;
+    demoFireAcc.textContent = fireMetrics.acc;
+
+    demoOverallF1Und.textContent = overall.f1Und;
+    demoOverallF1Des.textContent = overall.f1Des;
+    demoOverallF1W.textContent = overall.f1W;
+    demoOverallAcc.textContent = overall.acc;
+
+    demoEmpty.style.display = "none";
+    demoSingleWrap.style.display = "block";
+    demoCompareWrap.style.display = "none";
+    demoText.style.display = "block";
+
+    demoSingleMetrics.style.display = "grid";
+    demoCompareMetrics.style.display = "none";
     return;
   }
 
-  demoImage.src = imgPath(model, fire);
-  demoImage.alt = `${info.fireName} - ${modelLabel(model)} maps`;
+  demoModeLabel.textContent = "Model:";
+  demoModelName.textContent = "Model Comparison";
 
-  demoFireName.textContent = info.fireName;
-  demoModelName.textContent = modelLabel(model);
+  comparePrimaryLabel.textContent = `${modelLabel(model)} Predictions`;
+  compareSecondaryLabel.textContent = `${modelLabel(compareModel)} Predictions`;
 
-  // Metrics: this fire
-  demoFireF1Und.textContent = fireMetrics.f1Und;
-  demoFireF1Des.textContent = fireMetrics.f1Des;
-  demoFireF1W.textContent   = fireMetrics.f1W;
-  demoFireAcc.textContent   = fireMetrics.acc;
+  comparePrimaryImage.src = imgPath(model, fire);
+  comparePrimaryImage.alt = `${info.fireName} - ${modelLabel(model)} maps`;
 
-  // Metrics: overall test set
-  demoOverallF1Und.textContent = overall.f1Und;
-  demoOverallF1Des.textContent = overall.f1Des;
-  demoOverallF1W.textContent   = overall.f1W;
-  demoOverallAcc.textContent   = overall.acc;
+  compareSecondaryImage.src = imgPath(compareModel, fire);
+  compareSecondaryImage.alt = `${info.fireName} - ${modelLabel(compareModel)} maps`;
+
+  compareFireTitle1.textContent = modelLabel(model);
+  compareFireTitle2.textContent = modelLabel(compareModel);
+
+  compareFireF1Und1.textContent = fireMetrics.f1Und;
+  compareFireF1Des1.textContent = fireMetrics.f1Des;
+  compareFireF1W1.textContent = fireMetrics.f1W;
+  compareFireAcc1.textContent = fireMetrics.acc;
+
+  compareFireF1Und2.textContent = fireMetrics2.f1Und;
+  compareFireF1Des2.textContent = fireMetrics2.f1Des;
+  compareFireF1W2.textContent = fireMetrics2.f1W;
+  compareFireAcc2.textContent = fireMetrics2.acc;
+
+  compareOverallTitle1.textContent = modelLabel(model);
+  compareOverallTitle2.textContent = modelLabel(compareModel);
+
+  compareOverallF1Und1.textContent = overall.f1Und;
+  compareOverallF1Des1.textContent = overall.f1Des;
+  compareOverallF1W1.textContent = overall.f1W;
+  compareOverallAcc1.textContent = overall.acc;
+
+  compareOverallF1Und2.textContent = overall2.f1Und;
+  compareOverallF1Des2.textContent = overall2.f1Des;
+  compareOverallF1W2.textContent = overall2.f1W;
+  compareOverallAcc2.textContent = overall2.acc;
 
   demoEmpty.style.display = "none";
-  demoImageWrap.style.display = "block";
+  demoSingleWrap.style.display = "none";
+  demoCompareWrap.style.display = "block";
   demoText.style.display = "block";
+
+  demoSingleMetrics.style.display = "none";
+  demoCompareMetrics.style.display = "block";
 }
 
 if (fireSelect && modelSelect) {
   fireSelect.addEventListener("change", updateDemo);
   modelSelect.addEventListener("change", updateDemo);
+
+  if (compareToggle) {
+    compareToggle.addEventListener("change", updateDemo);
+  }
+
   updateDemo();
 }
 

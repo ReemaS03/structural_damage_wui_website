@@ -165,7 +165,7 @@ async function loadFire(key) {
 
     if (!hasUndamaged) {
         if (note) {
-            note.textContent = "Note: In the DINS dataset for this fire, none of the surveyed structures were classified as undamaged.\nHowever, this does not mean that no undamaged structures existed within the fire perimeter.";
+            note.textContent = "Note: In the DINS dataset for this fire, none of the surveyed residential structures were classified as undamaged.\nHowever, this does not mean that no undamaged structures existed within the fire perimeter.";
         }
 
         if (undamagedCheckbox) {
