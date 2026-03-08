@@ -421,89 +421,91 @@
     <section class="card" id="results">
       <h2>Results</h2>
       <h3>Overall Model Performance</h3>
-      <table class="results-table">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Class</th>
-            <th>Precision</th>
-            <th>Recall</th>
-            <th>F1</th>
-            <th>Support</th>
-          </tr>
-        </thead>
+      <div class="results-table-wrapper">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Class</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1</th>
+              <th>Support</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr class="model-row">
-            <td rowspan="5"><strong>Random Forest</strong></td>
-            <td>No Damage</td>
-            <td>0.642</td>
-            <td>0.888</td>
-            <td>0.745</td>
-            <td>303</td>
-          </tr>
-          <tr>
-            <td>Destroyed</td>
-            <td>0.974</td>
-            <td>0.893</td>
-            <td>0.932</td>
-            <td>1402</td>
-          </tr>
-          <tr>
-            <td>Macro avg</td>
-            <td>0.808</td>
-            <td>0.890</td>
-            <td>0.838</td>
-            <td>1705</td>
-          </tr>
-          <tr>
-            <td>Weighted avg</td>
-            <td>0.915</td>
-            <td>0.892</td>
-            <td><strong>0.898</strong></td>
-            <td>1705</td>
-          </tr>
-          <tr class="accuracy-row">
-            <td><em>Accuracy</em></td>
-            <td colspan="5" class="accuracy-value"><strong>89.2%</strong></td>
-          </tr>
-          <tr class="divider-row"><td colspan="6"></td></tr>
+          <tbody>
+            <tr class="model-row">
+              <td rowspan="5"><strong>Random Forest</strong></td>
+              <td>No Damage</td>
+              <td>0.642</td>
+              <td>0.888</td>
+              <td>0.745</td>
+              <td>303</td>
+            </tr>
+            <tr>
+              <td>Destroyed</td>
+              <td>0.974</td>
+              <td>0.893</td>
+              <td>0.932</td>
+              <td>1402</td>
+            </tr>
+            <tr>
+              <td>Macro avg</td>
+              <td>0.808</td>
+              <td>0.890</td>
+              <td>0.838</td>
+              <td>1705</td>
+            </tr>
+            <tr>
+              <td>Weighted avg</td>
+              <td>0.915</td>
+              <td>0.892</td>
+              <td><strong>0.898</strong></td>
+              <td>1705</td>
+            </tr>
+            <tr class="accuracy-row">
+              <td><em>Accuracy</em></td>
+              <td colspan="5" class="accuracy-value"><strong>89.2%</strong></td>
+            </tr>
+            <tr class="divider-row"><td colspan="6"></td></tr>
 
-          <tr class="model-row">
-            <td rowspan="5"><strong>Neural Network</strong></td>
-            <td>No Damage</td>
-            <td>0.824</td>
-            <td>0.508</td>
-            <td>0.629</td>
-            <td>303</td>
-          </tr>
-          <tr>
-            <td>Destroyed</td>
-            <td>0.902</td>
-            <td>0.976</td>
-            <td>0.938</td>
-            <td>1402</td>
-          </tr>
-          <tr>
-            <td>Macro avg</td>
-            <td>0.863</td>
-            <td>0.742</td>
-            <td>0.783</td>
-            <td>1705</td>
-          </tr>
-          <tr>
-            <td>Weighted avg</td>
-            <td>0.888</td>
-            <td>0.893</td>
-            <td><strong>0.883</strong></td>
-            <td>1705</td>
-          </tr>
-          <tr class="accuracy-row">
-            <td><em>Accuracy</em></td>
-            <td colspan="5" class="accuracy-value"><strong>89.3%</strong></td>
-          </tr>
-        </tbody>
-      </table>
+            <tr class="model-row">
+              <td rowspan="5"><strong>Neural Network</strong></td>
+              <td>No Damage</td>
+              <td>0.824</td>
+              <td>0.508</td>
+              <td>0.629</td>
+              <td>303</td>
+            </tr>
+            <tr>
+              <td>Destroyed</td>
+              <td>0.902</td>
+              <td>0.976</td>
+              <td>0.938</td>
+              <td>1402</td>
+            </tr>
+            <tr>
+              <td>Macro avg</td>
+              <td>0.863</td>
+              <td>0.742</td>
+              <td>0.783</td>
+              <td>1705</td>
+            </tr>
+            <tr>
+              <td>Weighted avg</td>
+              <td>0.888</td>
+              <td>0.893</td>
+              <td><strong>0.883</strong></td>
+              <td>1705</td>
+            </tr>
+            <tr class="accuracy-row">
+              <td><em>Accuracy</em></td>
+              <td colspan="5" class="accuracy-value"><strong>89.3%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       
       <p class="results-text">
         Both models achieve similar overall performance on the wildfire test set, with
