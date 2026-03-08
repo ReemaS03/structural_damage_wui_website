@@ -31,6 +31,7 @@
           <a href="#overview">Overview</a>
           <a href="#approach">Approach</a>
           <a href="#results">Results</a>
+          <a href="#discussion">Discussion</a>
           <a href="#conclusion">Conclusion</a>
           <a href="#links">Links</a>
         </div>
@@ -605,8 +606,8 @@
         <summary>How to read a SHAP summary plot</summary>
         <ul>
           <li>Each dot represents one structure.</li>
-          <li>The x-axis shows the SHAP value, indicating how much that feature pushes the prediction toward damage or no damage.</li>
-          <li>Points to the right (positive SHAP values) increase predicted damage risk, while points to the left (negative SHAP values) decrease it.</li>
+          <li>The x-axis shows the SHAP value, indicating how much that feature pushes the prediction toward structural damage or no structural damage.</li>
+          <li>Points to the right (positive SHAP values) increase predicted structural damage risk, while points to the left (negative SHAP values) decrease it.</li>
           <li>Color indicates the feature value (red = high, blue = low). For categorical variables, red indicates the presence of that feature while blue indicates its absence.</li>
           <li>Features are ordered from most to least influential, top to bottom.</li>
         </ul>
@@ -617,7 +618,6 @@
       <p class="demo-intro">
         Select a fire subset and model to explore how these importance patterns vary across fire subsets and between the two models.
       </p>
-      <p><strong> WIP Note:</strong> the demo text section is only filled for selected combinations, "All fires - Random Forest" and "Small Fires - Random". The rest will follow the same format and be updated soon.</p>
       <div class="demo-card" id="shapDemo">
         <!-- Row 1: dropdowns -->
         <div class="demo-controls">
@@ -625,7 +625,7 @@
             <span>Fire Subset</span>
             <select id="subsetSelect" class="demo-select">
               <option value="" selected>Select a fire subset...</option>
-              <option value="test_set">All Fires</option>
+              <option value="all_fires">All Fires</option>
               <option value="small">Small Fires</option>
               <option value="low_severity">Low Severity</option>
               <option value="high_severity">High Severity</option>
@@ -670,44 +670,118 @@
           </div>
         </div>
       </div>
-      <hr class="section-divider">
+    </section>
+
+    <!-- Discussion section -->
+    <section class="card" id="discussion">
+      <h2>Discussion</h2>
 
       <h3>Key Insights</h3>
       <ul class="results-list">
         <li>
           <strong>Structural characteristics strongly influence wildfire damage.</strong>
-          Features such as exterior wall materials, roof type, and eave design were
-          among the most important predictors of whether a structure was destroyed.
+          Features such as exterior wall materials, roof type, and eave design were among the most important predictors of whether a structure was destroyed.
         </li>
         <li>
           <strong>Environmental conditions also play an important role.</strong>
-          Burn severity, temperature, precipitation, and other environmental
-          variables contribute to overall wildfire damage risk for structures.
+          Burn severity, precipitation, temperature, and vapor pressure deficit contribute to wildfire damage risk in addition to structural characteristics.
         </li>
         <li>
-          <strong>Model choice affects how damage risk is identified.</strong>
-          The Random Forest more reliably identifies structures that survive fires,
-          while the Neural Network more strongly identifies structures likely to be
-          destroyed.
+          <strong>Model behavior varies depending on fire conditions.</strong>
+          The models performed best on lower-severity fires and struggled more in high-severity and plume-driven fires, suggesting that extreme fire conditions can reduce the predictive value of structural characteristics.
         </li>
         <li>
-          <strong>Structure-level modeling provides valuable insights into wildfire damage.</strong>
-          Modeling damage at the structure level allows the analysis to capture both
-          building characteristics and environmental conditions that influence
-          wildfire outcomes in the Wildland-Urban Interface.
+          <strong>Structure-level modeling provides meaningful insights into wildfire damage.</strong>
+          By combining structural inspection data with environmental and geospatial variables, the models capture both building-level vulnerability and local wildfire conditions that influence damage outcomes.
         </li>
         <li>
-          <strong>Predictive models can support wildfire planning and mitigation.</strong>
-          These models can help identify vulnerable structures and provide actionable insights
-          to support risk assessment, preparedness planning, insurance evaluation, and mitigation strategies.
+          <strong>Publicly available data can support practical wildfire risk assessment.</strong>
+          Even with important limitations, publicly available structural, environmental, and geospatial data can help identify vulnerable structures and support preparedness planning and risk modeling in Wildland-Urban Interface areas.
         </li>
       </ul>
+
+      <hr class="section-divider">
+
+      <h3>Interpretation of Results</h3>
+      <p class="results-text">
+      Both models identified similar predictors of wildfire damage: nine of the top ten most influential features were shared between the Random Forest and Neural Network models. This strong agreement suggests that these features represent genuine drivers of structural vulnerability rather than model-specific artifacts.
+      </p>
+      <ul class="results-list">
+        <li><strong>Structural features</strong> such as outer wall materials, roof type, and eave design were among the most influential predictors.</li>
+        <li><strong>Environmental conditions</strong> including burn severity, precipitation, and vapor pressure deficit also strongly influenced predictions.</li>
+      </ul>
+      <p class="results-text">
+      Model performance also varied across fire conditions. Both models performed best on lower-severity fires and struggled more in high-severity scenarios. In these extreme scenarios, structural features may matter less because many structures in the fire's path are destroyed regardless of construction materials or design.
+      </p>
+
+      <hr class="section-divider">
+
+      <h3>Limitations</h3>
+      <p class="results-text">
+        While our models demonstrate meaningful predictive performance, several limitations should be considered when interpreting these results.
+      </p>
+      <ul class="results-list">
+        <li>
+          <strong>Binary damage classification.</strong>
+          The models only distinguish between destroyed and undamaged structures, which excludes partial damage levels.
+        </li>
+
+        <li>
+          <strong>Class imbalance.</strong>
+          The dataset contains far more destroyed structures than undamaged ones. Although balanced class weights were used during training, this imbalance still affects model behavior and contributes to differences in precision and recall across classes.
+        </li>
+
+        <li>
+          <strong>Regional data scope.</strong>
+          The dataset is limited to California wildfires. Although cross-validation was designed to reduce data leakage between fires, the ability of these models to generalize to new geographic regions remains uncertain.
+        </li>
+
+        <li>
+          <strong>Post-fire data dependency.</strong>
+          Our framework depends partly on post-fire burn severity data from the MTBS dataset. Because this data is typically released one to two years after a wildfire occurs, the approach cannot yet support real-time wildfire damage prediction.
+        </li>
+      </ul>
+
+      <hr class="section-divider">
+
+      <h3>Future Work</h3>
+      <p class ="results-text">
+        Future work could address these limitations and build on our findings in several ways:
+      </p>
+      <ul class="results-list">
+        <li>
+          Extend the target variable to <strong>multi-class damage levels</strong> instead of a binary destroyed/undamaged outcome.
+        </li>
+
+        <li>
+          Incorporate <strong>additional weather variables</strong> such as wind speed and wind direction, which are especially important in wind-driven fires.
+        </li>
+
+        <li>
+          Expand the dataset to include <strong>more fires and geographic regions</strong> to improve generalizability.
+        </li>
+
+        <li>
+          Integrate <strong>real-time weather feeds and updated structural inventories</strong> to move toward real-time wildfire risk assessment.
+        </li>
+      </ul>
+      <p class="results-text">
+        By addressing these areas, future research could improve both our understanding of structural vulnerability to wildfires and the practical use of wildfire damage prediction models.
+      </p>
     </section>
 
     <!-- Conclusion section -->
     <section class="card" id="conclusion">
       <h2>Conclusion</h2>
-      <p><strong>WIP Note:</strong> Conclusion to be added.</p>
+      <p class="results-text">
+        In this project, we investigated whether residential structural damage in Wildland-Urban Interface areas could be predicted using publicly available geospatial, environmental, and structural data. To do this, we trained and evaluated Random Forest and Neural Network models using burn severity, weather, spatial, and structural inspection data from 30 California wildfires.
+      </p>
+      <p class="results-text">
+        Our results show that structure-level wildfire damage can be meaningfully predicted using accessible public data. Both models identified consistent patterns linking structural characteristics and environmental conditions to wildfire damage outcomes, and their strong agreement on influential predictors increases confidence in these findings.
+      </p>
+      <p class="results-text">
+        Overall, this project demonstrates that publicly available data can provide a practical foundation for structure-level wildfire risk assessment. As wildfire frequency and intensity continue to increase, accessible and interpretable tools for understanding structural vulnerability may help support preparedness, mitigation, and future planning in fire-prone communities beyond California.
+      </p>
     </section>
 
 

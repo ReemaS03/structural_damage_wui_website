@@ -212,21 +212,21 @@ const shapExplanation = document.getElementById("shapExplanation");
 
 const SUBSET_INFO = {
   rf: {
-    test_set: {
-      subsetName: "Test Set",
+    all_fires: {
+      subsetName: "All Fires",
       explanation: `
         <ul>
           <li>
             Structural characteristics such as exterior wall materials, roof type, and eave design strongly influence predictions.
             <ul>
-              <li>Structures with flammable outer walls increase predicted damage risk.</li>
-              <li>Open or enclosed eaves are associated with lower predicted damage.</li>
+              <li>Structures with flammable outer walls increase predicted structural damage risk.</li>
+              <li>Open or enclosed eaves are associated with lower predicted structural damage.</li>
             </ul>
           </li>
           <li>
             Environmental factors such as burn severity class and weather conditions also affect predictions.
             <ul>
-              <li>Higher burn severity is associated with increased predicted destruction risk.</li>
+              <li>Higher burn severity is associated with increased predicted structural damage risk.</li>
             </ul>
           </li>
         </ul>
@@ -240,15 +240,15 @@ const SUBSET_INFO = {
           <li>
             Environmental conditions play a major role in predictions for smaller fires, with precipitation and burn severity among the most influential features.
             <ul>
-              <li>Higher precipitation is associated with lower predicted damage risk.</li>
-              <li>Higher burn severity increases predicted destruction risk.</li>
+              <li>Higher precipitation is associated with lower predicted structural damage risk.</li>
+              <li>Higher burn severity increases predicted structural damage risk.</li>
             </ul>
           </li>
           <li>
-            Structural characteristics still influence outcomes, though they are less dominant than in the full test set.
+            Structural characteristics still influence outcomes.
             <ul>
-              <li>Open eaves are associated with lower predicted damage.</li>
-              <li>Structures with single-pane windows tend to show higher predicted vulnerability.</li>
+              <li>Open eaves are associated with lower predicted structural damage risk.</li>
+              <li>Structures with single-pane windows tend to show higher predicted structural damage risk.</li>
             </ul>
           </li>
         </ul>
@@ -258,72 +258,232 @@ const SUBSET_INFO = {
     low_severity: {
       subsetName: "Low Severity",
       explanation: `
-        <p>RF low severity explanation to be added.</p>
+        <ul>
+          <li>
+            Structural characteristics play a larger role in predictions for lower-severity fires.
+            <ul>
+              <li>Structures with single-pane windows tend to show higher predicted structural damage risk.</li>
+              <li>The use of certain roof types, such as asphalt or metal roofs, is also associated with higher predicted structural damage risk.</li>
+            </ul>
+          </li>
+          <li>
+            Environmental conditions still influence predictions.
+            <ul>
+              <li>Higher precipitation is associated with lower predicted structural damage risk.</li>
+              <li>Higher burn severity increases predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     high_severity: {
       subsetName: "High Severity",
       explanation: `
-        <p>RF high severity explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions play a particularly important role for high-severity fires.
+            <ul>
+              <li>
+                All values (low, medium, and high) of max vapor pressure deficit — a measure of how dry the air is — increase the predicted structural damage risk, but higher values produce stronger increases in predicted structural damage risk. In other words, the higher the vapor pressure deficit, the greater the predicted structural damage risk.
+              </li>
+              <li>Burn severity class also remains an important predictor of structural damage risk.</li>
+            </ul>
+          </li>
+          <li>
+            Structural features still contribute, particularly the use of asphalt roofs, which is associated with higher predicted structural damage risk in this subset.
+          </li>
+        </ul>
       `
     },
 
     wind_driven: {
       subsetName: "Wind Driven",
       explanation: `
-        <p>RF wind-driven explanation to be added.</p>
+        <ul>
+          <li>
+            Structural characteristics play an important role in predictions for wind-driven fires.
+            <ul>
+              <li>Structures with flammable outer wall materials are associated with higher predicted structural damage risk in this subset.</li>
+              <li>The use of fire-resistant roofs also appears among the most influential structural predictors. This does not necessarily mean these roofs increase predicted structural damage risk, but may reflect that these structures tend to occur in areas that experience more severe wind-driven fire conditions.</li>
+            </ul>
+          </li>
+          <li>
+            Environmental conditions also influence predictions.
+            <ul>
+              <li>Higher burn severity increases predicted structural damage risk.</li>
+              <li>Lower precipitation is associated with higher predicted structural damage risk, suggesting that drier conditions contribute to greater vulnerability during wind-driven fires.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     plume_driven: {
       subsetName: "Plume Driven",
       explanation: `
-        <p>RF plume-driven explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions play a particularly strong role in predictions for plume-driven fires, with burn severity class having the largest impact on predicted structural damage.
+            <ul>
+              <li>Higher burn severity classes are strongly associated with increased predicted structural damage risk, while lower and moderate burn severity values tend to reduce predicted structural damage risk.</li>
+              <li>Although the effect of max vapor pressure deficit — a measure of how dry the air is — is less clearly separated than burn severity, the highest values increase predicted structural damage risk, while the remaining range of values tends to reduce predicted structural damage risk.</li>
+            </ul>
+          </li>
+          <li>
+            Several structural characteristics also influence predictions.
+            <ul>
+              <li>Structures with single-pane windows or open eaves are associated with higher predicted structural damage risk.</li>
+              <li>Features related to defensible space — the buffer between a structure and the surrounding area — also appear influential. Structures without fences or decks/porches tend to increase predicted structural damage risk, while their presence is associated with reduced predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     }
   },
 
   nn: {
-    test_set: {
-      subsetName: "Test Set",
+    all_fires: {
+      subsetName: "All Fires",
       explanation: `
-        <p>NN test set explanation to be added.</p>
+        <ul>
+          <li>
+            Structural characteristics strongly influence predictions for this subset.
+            <ul>
+              <li>Outer wall materials appear highly influential, with both flammable and burn-resistant outer walls associated with higher predicted structural damage risk. This does not necessarily mean burn-resistant materials increase predicted structural damage risk, but may reflect that these structures tend to occur in areas with higher wildfire exposure.</li>
+              <li>Eave design also appears highly influential, with structures that have either open or enclosed eaves associated with lower predicted structural damage risk.</li>
+            </ul>
+          </li>
+          <li>
+            Environmental conditions also contribute to predictions.
+            <ul>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while moderate and low classes tend to reduce predicted structural damage risk.</li>
+              <li>Higher precipitation is associated with higher predicted structural damage risk, while lower precipitation tends to reduce predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     small: {
       subsetName: "Small Fires",
       explanation: `
-        <p>NN small fires explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions play an important role in predictions for smaller fires.
+            <ul>
+              <li>Higher precipitation is associated with lower predicted structural damage risk, while lower precipitation tends to increase predicted structural damage risk.</li>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while lower severity levels tend to reduce predicted structural damage risk.</li>
+            </ul>
+          </li>
+
+          <li>
+            Structural characteristics also influence predictions in this subset.
+            <ul>
+              <li>Structures with open or enclosed eaves are associated with lower predicted structural damage risk.</li>
+            </ul>
+          </li>
+
+          <li>
+            Some location-based characteristics also appear influential.
+            <ul>
+              <li>Vacant housing unit density generally reduces predicted structural damage risk, with higher vacancy levels associated with even lower predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     low_severity: {
       subsetName: "Low Severity",
       explanation: `
-        <p>NN low severity explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions still influence predictions in the low-severity fire subset.
+            <ul>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while lower severity levels tend to reduce predicted structural damage risk.</li>
+              <li>Higher precipitation is associated with lower predicted structural damage risk, while lower precipitation tends to increase predicted structural damage risk. The reduction in predicted structural damage risk for higher precipitation levels appears stronger than the increase associated with lower precipitation in this subset.</li>
+            </ul>
+          </li>
+
+          <li>
+            Structural characteristics also play an important role in predictions.
+            <ul>
+              <li>Structures with either open or enclosed eaves are associated with lower predicted structural damage risk.</li>
+              <li>Fire-resistant roofs are associated with higher predicted structural damage risk in this subset. This does not necessarily mean these roofs increase vulnerability, but may reflect that such structures are more common in areas that experience higher wildfire exposure.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     high_severity: {
       subsetName: "High Severity",
       explanation: `
-        <p>NN high severity explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions play an important role in predictions for high-severity fires.
+            <ul>
+              <li>Max vapor pressure deficit — a measure of how dry the air is — consistently contributes to higher predicted structural damage risk in this subset, although its effect is not cleanly separated by feature value.</li>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while lower severity levels tend to reduce predicted structural damage risk.</li>
+            </ul>
+          </li>
+
+          <li>
+            Structural characteristics also influence predictions in this subset.
+            <ul>
+              <li>Structures without flammable outer wall materials are associated with lower predicted structural damage risk in this subset.</li>
+              <li>Asphalt roofs are also associated with higher predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     wind_driven: {
       subsetName: "Wind Driven",
       explanation: `
-        <p>NN wind-driven explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental conditions play an important role in predictions for wind-driven fires.
+            <ul>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while lower severity levels tend to reduce predicted structural damage risk.</li>
+              <li>Higher mean temperatures are associated with lower predicted structural damage risk in this subset.</li>
+            </ul>
+          </li>
+
+          <li>
+            Structural and spatial characteristics also influence predictions.
+            <ul>
+              <li>Structures with flammable outer wall materials are associated with higher predicted structural damage risk.</li>
+              <li>Greater distance to nearby structures is associated with lower predicted structural damage risk, suggesting that more isolated structures may be less exposed to fire spread in wind-driven conditions.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
 
     plume_driven: {
       subsetName: "Plume Driven",
       explanation: `
-        <p>NN plume-driven explanation to be added.</p>
+        <ul>
+          <li>
+            Environmental features influence predictions in plume-driven fires.
+            <ul>
+              <li>Higher burn severity classes are associated with increased predicted structural damage risk, while lower severity levels tend to reduce predicted structural damage risk.</li>
+              <li>Higher precipitation levels are generally associated with lower predicted structural damage risk in this subset.</li>
+              <li>Greater surrounding vegetation height is associated with higher predicted structural damage risk.</li>
+            </ul>
+          </li>
+
+          <li>
+            Structural characteristics also influence predictions.
+            <ul>
+              <li>Structures without fences are associated with higher predicted structural damage risk.</li>
+              <li>Structures with open eaves are associated with lower predicted structural damage risk.</li>
+            </ul>
+          </li>
+        </ul>
       `
     }
   }
