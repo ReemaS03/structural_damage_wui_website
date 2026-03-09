@@ -28,6 +28,11 @@ header p{
 /* -- Navbar */
 :root{
     --nav-offset: 75px;
+    --accent: #073454;
+    --accent-rgb: 7, 52, 84;       
+    --surface: #fafafa;
+    --border: #e9e9e9;
+    --shadow: rgba(17, 17, 17, 0.06);
 }
 
 .navbar{
@@ -425,13 +430,9 @@ body.modal-open{
 }
 
 /* -- Data subsection under approach section */
-.data-list {
-    margin: 6px 0 12px 0;
-    padding-left: 20px;
-}
-
+.data-list,
 .data-list-2 {
-    margin: 6px 0 12px 0;
+    margin: 6px 0 12px;
     padding-left: 20px;
 }
 
@@ -440,7 +441,7 @@ body.modal-open{
 }
 
 .tech-list{
-    margin: 6px 0 12px 0;
+    margin: 6px 0 12px;
     padding-left: 2px;
     font-size: 0.95rem;
 }
@@ -458,14 +459,6 @@ body.modal-open{
 }
 
 /* -- demo (Fire x Model) */
-:root{
-    --accent: #073454;
-    --accent-rgb: 7, 52, 84;       
-    --surface: #fafafa;
-    --border: #e9e9e9;
-    --shadow: rgba(17, 17, 17, 0.06);
-}
-
 .demo-intro{
     max-width: 850px;
     margin: 0 6px 12px;
@@ -717,11 +710,8 @@ body.modal-open{
     }
 
     .demo-meta{
-        flex-wrap: wrap;   
-    }
-
-    .demo-meta{
         display: flex !important;
+        flex-wrap: wrap; 
         flex-direction: column !important;
         align-items: center !important;
         gap: 4px !important;
@@ -931,10 +921,6 @@ body.modal-open{
 }
 
 .map-note{
-    white-space: pre-line;
-}
-
-.map-note{
     font-size: 0.9rem;
     opacity: 0.75;
     margin-top: 6px;
@@ -1021,6 +1007,11 @@ body.modal-open{
 }
 
 .results-list {
-    margin: 6px 0 12px 0;
+    margin: 6px 0 12px;
     padding-left: 20px;
+}
+
+.nested-list{
+    margin: 6px 0 12px;
+    padding-left: 18px;
 }
