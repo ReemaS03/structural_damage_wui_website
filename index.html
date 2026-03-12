@@ -10,10 +10,6 @@
 
 <body>
   <main>
-    <header id="top">
-      <h1>Wildfire Severity and Structural Damage Prediction in Wildland-Urban Interface (WUI) Areas</h1>
-      <p><em>Understanding and predicting wildfire impacts on residential structures in Wildland-Urban Interface (WUI) areas.</em></p>
-    </header>
 
     <nav class="navbar">
       <div class="nav-left">
@@ -23,7 +19,7 @@
       </div>
 
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        ☰
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-align-justify-icon lucide-text-align-justify"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/></svg>
       </button>
 
       <div class="nav-menu" id="navMenu">
@@ -37,6 +33,10 @@
         </div>
       </div>
 
+      <div class="nav-theme">
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </div>
+
       <div class="nav-right">
         <a href="https://www.cotality.com" target="_blank" rel="noopener noreferrer">
           <img src="images/cotality-logo.png" alt="Cotality Logo" class="logo">
@@ -44,6 +44,31 @@
       </div>
     </nav>
 
+    <section class="hero">
+      <h1 class="hero-title">
+        Wildfire Severity and Structural Damage Prediction in Wildland-Urban Interface (WUI) Areas
+      </h1>
+
+      <p class="hero-subtitle">
+        Understanding and predicting wildfire impacts on residential structures
+        in Wildland-Urban Interface (WUI) areas, where homes meet wildland vegetation.
+      </p>
+
+      <!-- <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-number">30</span>
+          <span class="hero-stat-label">Fires</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">47,000</span>
+          <span class="hero-stat-label">Structures</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">2</span>
+          <span class="hero-stat-label">Models</span>
+        </div>
+      </div> -->
+    </section>
 
     <!-- Overview section -->
     <section class="card" id="overview">
@@ -83,8 +108,9 @@
               alt="North Complex Fire structure damage map"
               class="overview-img"
             />
-            <button type="button" class="expand-btn"
-                    onclick="openModal(this.previousElementSibling)">⤢</button>
+            <button type="button" class="expand-btn" onclick="openModal(this.previousElementSibling)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+            </button>
           </div>
 
           <figcaption class="overview-caption">
@@ -122,7 +148,7 @@
 
     <!-- Interactive map section -->
     <section id="mapdemo">
-      <h2>Structure-Level Damage Map</h2>
+      <h2 class="section-description">Structure-Level Damage Map</h2>
       <p class="section-description">
         This map shows observed structure outcomes from the <strong>CAL FIRE Damage Inspection (DINS)</strong> dataset for two fires, filtered by residential structures and damage classes of interest (Destroyed >50% or No Damage). <br>
       </p>
@@ -174,7 +200,9 @@
           alt="Wildfire Structure Damage Prediction Pipeline Flowchart"
           class="pipeline-img"
         >
-        <button type="button" class="expand-btn" onclick="openModal(this.previousElementSibling)">⤢</button>
+        <button type="button" class="expand-btn" onclick="openModal(this.previousElementSibling)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+        </button>
       </div>
 
       <p class="pipeline-caption">
@@ -620,9 +648,9 @@
           <!-- single-image mode -->
           <div id="demoSingleWrap" class="image-container demo-image" style="display:none;">
             <img id="demoImage" src="" alt="Selected fire/model damage maps">
-            <button type="button" class="expand-btn"
-                    aria-label="Expand image"
-                    onclick="openModal(document.getElementById('demoImage'))">⤢</button>
+            <button type="button" class="expand-btn" aria-label="Expand image" onclick="openModal(document.getElementById('demoImage'))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+            </button>
           </div>
 
           <!-- compare mode -->
@@ -631,9 +659,9 @@
               <div class="compare-image-label" id="comparePrimaryLabel"></div>
               <div class="image-container demo-image">
                 <img id="comparePrimaryImage" src="" alt="">
-                <button type="button" class="expand-btn"
-                        aria-label="Expand image"
-                        onclick="openModal(document.getElementById('comparePrimaryImage'))">⤢</button>
+                <button type="button" class="expand-btn" aria-label="Expand image" onclick="openModal(document.getElementById('comparePrimaryImage'))">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+                </button>
               </div>
             </div>
 
@@ -641,9 +669,9 @@
               <div class="compare-image-label" id="compareSecondaryLabel"></div>
               <div class="image-container demo-image">
                 <img id="compareSecondaryImage" src="" alt="">
-                <button type="button" class="expand-btn"
-                        aria-label="Expand image"
-                        onclick="openModal(document.getElementById('compareSecondaryImage'))">⤢</button>
+                <button type="button" class="expand-btn" aria-label="Expand image" onclick="openModal(document.getElementById('compareSecondaryImage'))">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+                </button>
               </div>
             </div>
           </div>
@@ -730,13 +758,15 @@
       </p>
       <details class="expandable" id="shap-help">
         <summary>How to read a SHAP summary plot</summary>
-        <ul>
-          <li>Each dot represents one structure.</li>
-          <li>The x-axis shows the SHAP value, indicating how much that feature pushes the prediction toward structural damage or no structural damage.</li>
-          <li>Points to the right (positive SHAP values) increase predicted structural damage risk, while points to the left (negative SHAP values) decrease it.</li>
-          <li>Color indicates the feature value (red = high, blue = low). For categorical variables, red indicates the presence of that feature while blue indicates its absence.</li>
-          <li>Features are ordered from most to least influential, top to bottom.</li>
-        </ul>
+        <div class="expand-content">
+          <ul class="tech-list">
+            <li>Each dot represents one structure.</li>
+            <li>The x-axis shows the SHAP value, indicating how much that feature pushes the prediction toward structural damage or no structural damage.</li>
+            <li>Points to the right (positive SHAP values) increase predicted structural damage risk, while points to the left (negative SHAP values) decrease it.</li>
+            <li>Color indicates the feature value (red = high, blue = low). For categorical variables, red indicates the presence of that feature while blue indicates its absence.</li>
+            <li>Features are ordered from most to least influential, top to bottom.</li>
+          </ul>
+        </div>
       </details>
       <p class="demo-intro">
         The SHAP summary plots below show how feature importance changes across different subsets of fires.
@@ -778,9 +808,9 @@
 
           <div id="shapImageWrap" class="image-container demo-image" style="display:none;">
             <img id="shapImage" src="" alt="Selected fire subset/model SHAP plot">
-            <button type="button" class="expand-btn"
-                    aria-label="Expand image"
-                    onclick="openModal(document.getElementById('shapImage'))">⤢</button>
+            <button type="button" class="expand-btn" aria-label="Expand image" onclick="openModal(document.getElementById('shapImage'))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand-icon lucide-expand"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+            </button>
           </div>
         </div>
 
@@ -940,7 +970,9 @@
   </main>
   <div id="imageModal" class="modal">
     <div class="modal-content">
-      <button type="button" class="modal-close" aria-label="Close image">✕</button>
+      <button type="button" class="modal-close" aria-label="Close image">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+      </button>
       <img id="modalImage" class="modal-img" alt="">
     </div>
   </div>
